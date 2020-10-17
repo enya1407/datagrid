@@ -1,0 +1,14 @@
+.th {
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    width: 100px;
+    overflow: hidden;
+}
+
+.th:hover::after {
+    content: "▼";
+    right: 8px;
+    position: absolute;
+}
