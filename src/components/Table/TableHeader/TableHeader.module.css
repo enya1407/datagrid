@@ -7,6 +7,11 @@
     overflow: hidden;
 }
 
+.th:hover {
+
+    background-color: #ff00007a;
+}
+
 .th:hover::after {
     content: "▼";
     right: 8px;

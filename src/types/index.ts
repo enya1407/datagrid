@@ -10,8 +10,7 @@ export interface PersonType {
 
 export interface StateType {
   isLoading: boolean;
-  persons: Array<PersonType>;
-  name: string;
-  secondName: string;
+  initialDataPersons: Array<PersonType>;
+  currentDataPersons: Array<PersonType>;
+  sortedBy: Record<keyof PersonType, string | undefined>;
 }
-

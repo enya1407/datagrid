@@ -9,12 +9,13 @@ interface TableRowProps {
 
 const TableRow: React.FC<TableRowProps> = ({id}) => {
   const {persons} = useSelector((state: StateType) => ({
-    persons: state.persons,
+    persons: state.currentDataPersons,
   }));
 
   return (
     <tbody>
     <tr className={styles.tr} key={persons[id]?.id}>
+      <td className={styles.td}>{persons[id]?.id}</td>
       <td className={styles.td}>{persons[id]?.first_name}</td>
       <td className={styles.td}>{persons[id]?.last_name}</td>
       <td className={styles.td}>{persons[id]?.gender}</td>

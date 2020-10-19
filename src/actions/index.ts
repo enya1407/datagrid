@@ -1,17 +1,12 @@
 import {PersonType} from "../types";
 
-export const changeNameAction = (name: string) => ({
-  type: "CHANGE_NAME",
-  payload: {name},
-})
-
-export const changeSecondNameAction = (secondName: string) => ({
-  type: "CHANGE_SECOND_NAME",
-  payload: {secondName},
-})
-export const changePersonAction = (persons: Array<PersonType>) => ({
-  type: "CHANGE_PERSON",
+export const changeInitialPersonAction = (persons: Array<PersonType>) => ({
+  type: "CHANGE_INITIAL_PERSON",
   payload: {persons},
+})
+export const sortDataAction = (keyName: keyof PersonType) => ({
+  type: "SORT_DATA",
+  payload: {keyName},
 })
 export const changeLoadingAction = (isLoading: boolean) => ({
   type: "CHANGE_LOADING",
