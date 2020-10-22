@@ -1,29 +1,22 @@
 import React from "react";
 import styles from "./TableRow.module.css"
-import {useSelector} from "react-redux";
-import {StateType} from "../../../types";
+import {PersonType} from "../../../types";
 
 interface TableRowProps {
-  id: number;
+  person: PersonType;
 }
 
-const TableRow: React.FC<TableRowProps> = ({id}) => {
-  const {persons} = useSelector((state: StateType) => ({
-    persons: state.currentDataPersons,
-  }));
-
+const TableRow: React.FC<TableRowProps> = ({person}) => {
   return (
-    <tbody>
-    <tr className={styles.tr} key={persons[id]?.id}>
-      <td className={styles.td}>{persons[id]?.id}</td>
-      <td className={styles.td}>{persons[id]?.first_name}</td>
-      <td className={styles.td}>{persons[id]?.last_name}</td>
-      <td className={styles.td}>{persons[id]?.gender}</td>
-      <td className={styles.td}>{persons[id]?.shirt_size}</td>
-      <td className={styles.td}>{persons[id]?.app_name}</td>
-      <td className={styles.td}>{persons[id]?.app_version}</td>
+    <tr className={styles.tr}>
+      <td className={styles.td}>{person.id - 1}</td>
+      <td className={styles.td}>{person.first_name}</td>
+      <td className={styles.td}>{person.last_name}</td>
+      <td className={styles.td}>{person.gender}</td>
+      <td className={styles.td}>{person.shirt_size}</td>
+      <td className={styles.td}>{person.app_name}</td>
+      <td className={styles.td}>{person.app_version}</td>
     </tr>
-    </tbody>
   )
 }
 export default TableRow

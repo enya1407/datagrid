@@ -1,20 +1,19 @@
 import React from "react";
 import styles from "./TableHeader.module.css"
-import {useDispatch} from "react-redux";
-import {sortDataAction} from "../../../actions";
+import TableHeaderCell from "./TableHeaderCell/TableHeaderCell";
+import {PersonType} from "../../../types";
+
 
 const TableHeader = () => {
-  const dispatch = useDispatch();
+
+  const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "app_version"]
+  const tableHeaderCell = ArrCellName.map((data: Partial<keyof PersonType>, i: number) => (
+    <TableHeaderCell key={i} name={data}/>
+  ))
   return (
     <thead>
     <tr className={styles.tr}>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("id"))}>№</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("first_name"))}>first_name</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("last_name"))}>last_name</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("gender"))}>gender</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("shirt_size"))}>shirt_size</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("app_name"))}>app_name</th>
-      <th className={styles.th} onClick={() => dispatch(sortDataAction("app_version"))}>app_version</th>
+      {tableHeaderCell}
     </tr>
     </thead>
   )

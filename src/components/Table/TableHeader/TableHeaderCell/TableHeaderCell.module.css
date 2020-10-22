@@ -1,0 +1,35 @@
+.th {
+    border: 1px solid black;
+    position: relative;
+    width: 100px;
+    overflow: hidden;
+}
+
+.th_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.sort__btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.search {
+    margin: auto 0;
+}
+
+.img__ascent_active, .img__decent_active, .img__search_active {
+    color: red
+}
+
+.img__ascent:hover, .img__decent:hover, .img__search:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+
+
+

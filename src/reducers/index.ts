@@ -1,7 +1,14 @@
 import {StateType} from '../types/index';
-import {changeInitialPersonAction, changeLoadingAction, sortDataAction} from "../actions";
+import {
+  changeFilterByAction,
+  changeInitialPersonAction,
+  changeLoadingAction,
+  filterDataAction,
+  sortDataAction
+} from "../actions";
 import {createRootReducer} from "../utils/createRootReducer";
 import sortPersons from "../utils/sortPersons";
+import filterPersons from "../utils/filterPersons";
 
 const initialState: StateType = {
   isLoading: false,
@@ -9,14 +16,48 @@ const initialState: StateType = {
   currentDataPersons: [],
   sortedBy: {
     id: undefined,
-    first_name: undefined,
-    last_name: undefined,
     gender: undefined,
-    shirt_size: undefined,
-    app_name: undefined,
-    app_version: undefined,
-  }
+    "first_name": undefined,
+    "last_name": undefined,
+    "shirt_size": undefined,
+    "app_name": undefined,
+    "app_version": undefined,
+  },
+  filterBy: {
+    id: "",
+    gender: "",
+    "first_name": "",
+    "last_name": "",
+    "shirt_size": "",
+    "app_name": "",
+    "app_version": "",
+  },
 }
+
+const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDataAction>) => {
+  return action.payload.searchButton
+    ? {
+      ...state,
+      currentDataPersons: filterPersons(state.initialDataPersons, action.payload.keyName, state.filterBy[action.payload.keyName])
+    }
+    : {
+      ...state,
+      currentDataPersons: state.initialDataPersons,
+      filterBy: {
+        ...initialState.filterBy,
+        [action.payload.keyName]: "",
+      },
+    };
+}
+
+
+const changeFilterByReducer = (state: StateType, action: ReturnType<typeof changeFilterByAction>) => ({
+  ...state,
+  filterBy: {
+    ...initialState.filterBy,
+    [action.payload.keyName]: action.payload.filterBy,
+  },
+});
 const changeLoadingReducer = (state: StateType, action: ReturnType<typeof changeLoadingAction>) => ({
   ...state,
   isLoading: action.payload.isLoading,
@@ -31,31 +72,27 @@ const changeInitialPersonReducer = (state: StateType, action: ReturnType<typeof 
 
 const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAction>) => {
   switch (state.sortedBy[action.payload.keyName]) {
-    case 'ascent':
-      return ({
-        ...state,
-        currentDataPersons: sortPersons(state.initialDataPersons, action.payload.keyName, "decent"),
-        sortedBy: {
-          ...state.sortedBy, [action.payload.keyName]: "decent"
-        }
-      })
-    case 'decent':
+    case action.payload.direction:
       return ({
         ...state,
         currentDataPersons: state.initialDataPersons,
         sortedBy: {
-          ...state.sortedBy, [action.payload.keyName]: undefined
+          ...initialState.sortedBy,
+          [action.payload.keyName]: undefined,
         }
       })
 
     default:
       return ({
         ...state,
-        currentDataPersons: sortPersons(state.currentDataPersons, action.payload.keyName, "ascent"),
+        currentDataPersons: sortPersons(state.currentDataPersons, action.payload.keyName, action.payload.direction),
         sortedBy: {
-          ...state.sortedBy, [action.payload.keyName]: "ascent"
+          ...initialState.sortedBy,
+          [action.payload.keyName]: action.payload.direction,
         }
       })
+
+
   }
 
 };
@@ -63,5 +100,7 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
 export const rootReducer = createRootReducer(initialState)([
   [changeInitialPersonReducer, changeInitialPersonAction],
   [sortDataReducer, sortDataAction],
-  [changeLoadingReducer, changeLoadingAction]
+  [changeLoadingReducer, changeLoadingAction],
+  [changeFilterByReducer, changeFilterByAction],
+  [filterDataReducer, filterDataAction]
 ]);

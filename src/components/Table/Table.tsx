@@ -7,14 +7,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {changeLoadingAction} from "../../actions";
 import {PersonType} from "../../types";
 import {commonSelector} from "../../selector/selector";
+import {Spin} from "antd";
 
 const Table = () => {
   const dispatch = useDispatch();
-  const {isLoading, currentDataPersons, sortedBy} = useSelector(commonSelector);
-  console.log(sortedBy)
-  const rows = currentDataPersons.map((data: PersonType) => (
-    <TableRow key={data.id} id={data.id}/>
-  ))
+  const {isLoading, currentDataPersons} = useSelector(commonSelector);
+
+  const rows = currentDataPersons.map((person: PersonType) => {
+    return <TableRow key={person.id} person={person}/>
+  })
 
   useEffect(() => {
       dispatch(changeLoadingAction(true))
@@ -22,17 +23,20 @@ const Table = () => {
     },
     [])
 
+  if (isLoading) {
+    return (<div>
+      <Spin size="large"/>
+    </div>)
+  }
+
   return (
     <table className={styles.table}>
       <caption>Таблица</caption>
       <TableHeader/>
-      {
-        isLoading
-          ? "...spinner"
-          : rows
-      }
+      <tbody>
+      {rows}
+      </tbody>
     </table>
-
   )
 }
 
