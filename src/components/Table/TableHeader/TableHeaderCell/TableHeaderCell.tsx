@@ -30,7 +30,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   }
 
   const title = <div>
-    <Input value={text} placeholder={`Search ${name}`} onKeyDown={(event) => onKeyPressHandler(event)}
+    <Input value={text} autoFocus={true} placeholder={`Search ${name}`} onKeyDown={(event) => onKeyPressHandler(event)}
            onChange={(event) =>
              dispatch(changeFilterByAction(name, event.target.value))}/>
   </div>
@@ -60,7 +60,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
                  title={title}
                  trigger="click"
                  className={styles.search}>
-          <SearchOutlined/>
+          <SearchOutlined className={styles.img__search}/>
         </Popover>
       </div>
     </th>

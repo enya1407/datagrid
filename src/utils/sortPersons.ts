@@ -46,10 +46,11 @@ const sizeSort = (sortedBy: "ascent" | "decent") =>
     }
 
 
-const stringSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) => (a: PersonType, b: PersonType) =>
+const stringSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
   sortedBy === "ascent"
-    ? (a[key] as string).toLowerCase() > (a[key] as string).toLowerCase() ? 1 : -1
-    : (a[key] as string).toLowerCase() > (a[key] as string).toLowerCase() ? -1 : 1;
+    ? (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? 1 : -1
+    : (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? -1 : 1;
+
 
 const sortFunctionMap = (sortedBy: "ascent" | "decent") => ({
   id: numberSort(sortedBy, "id"),

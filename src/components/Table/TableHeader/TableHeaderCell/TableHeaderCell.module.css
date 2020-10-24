@@ -17,12 +17,17 @@
     justify-content: center;
 }
 
+
 .search {
     margin: auto 0;
 }
 
+.img__ascent, .img__decent, .img__search {
+    fontSize: 40px
+}
+
 .img__ascent_active, .img__decent_active, .img__search_active {
-    color: red
+    color: #1890ff
 }
 
 .img__ascent:hover, .img__decent:hover, .img__search:hover {

@@ -9,7 +9,7 @@ interface TableRowProps {
 const TableRow: React.FC<TableRowProps> = ({person}) => {
   return (
     <tr className={styles.tr}>
-      <td className={styles.td}>{person.id - 1}</td>
+      <td className={styles.td}>{person.id}</td>
       <td className={styles.td}>{person.first_name}</td>
       <td className={styles.td}>{person.last_name}</td>
       <td className={styles.td}>{person.gender}</td>
