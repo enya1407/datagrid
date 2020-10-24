@@ -14,5 +14,6 @@ export interface StateType {
   currentDataPersons: Array<PersonType>;
   sortedBy: Record<keyof PersonType, "ascent" | "decent" | undefined>;
   filterBy: Record<keyof PersonType, string>;
+  visibilityColumns: Record<keyof PersonType, boolean>;
 }
 

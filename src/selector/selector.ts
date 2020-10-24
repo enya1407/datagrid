@@ -6,4 +6,6 @@ export const personsSelector = (state: StateType): Array<PersonType> => state.cu
 export const loadingSelector = (state: StateType): boolean => state.isLoading;
 export const sortedBySelector = (state: StateType): Record<keyof PersonType, string | undefined> => state.sortedBy;
 export const filterBySelector = (state: StateType): Record<keyof PersonType, string> => state.filterBy;
+export const visibilityColumnsSelector = (state: StateType): Record<keyof PersonType, boolean> => state.visibilityColumns;
+
 

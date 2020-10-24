@@ -20,5 +20,9 @@ export const filterDataAction = (keyName: keyof PersonType, searchButton: boolea
   type: "START_FILTERING",
   payload: {keyName, searchButton},
 })
+export const changeVisibilityAction = (keyName: keyof PersonType) => ({
+  type: "CHANGE_VISIBILITY",
+  payload: {keyName},
+})
 
 

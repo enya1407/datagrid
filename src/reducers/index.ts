@@ -3,6 +3,7 @@ import {
   changeFilterByAction,
   changeInitialPersonAction,
   changeLoadingAction,
+  changeVisibilityAction,
   filterDataAction,
   sortDataAction
 } from "../actions";
@@ -32,7 +33,24 @@ const initialState: StateType = {
     "app_name": "",
     "app_version": "",
   },
+  visibilityColumns: {
+    id: true,
+    gender: true,
+    "first_name": true,
+    "last_name": true,
+    "shirt_size": true,
+    "app_name": true,
+    "app_version": true,
+  }
 }
+
+const changeVisibilityReducer = (state: StateType, action: ReturnType<typeof changeVisibilityAction>) => ({
+  ...state,
+  visibilityColumns: {
+    ...state.visibilityColumns,
+    [action.payload.keyName]: !state.visibilityColumns[action.payload.keyName],
+  }
+})
 
 const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDataAction>) => {
   return action.payload.searchButton
@@ -102,5 +120,6 @@ export const rootReducer = createRootReducer(initialState)([
   [sortDataReducer, sortDataAction],
   [changeLoadingReducer, changeLoadingAction],
   [changeFilterByReducer, changeFilterByAction],
-  [filterDataReducer, filterDataAction]
+  [filterDataReducer, filterDataAction],
+  [changeVisibilityReducer, changeVisibilityAction]
 ]);

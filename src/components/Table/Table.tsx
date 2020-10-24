@@ -31,7 +31,7 @@ const Table = () => {
 
   return (
     <table className={styles.table}>
-      <caption>Таблица</caption>
+      <caption className={styles.caption}>Таблица</caption>
       <TableHeader/>
       <tbody>
       {rows}
