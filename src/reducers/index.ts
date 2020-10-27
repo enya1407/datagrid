@@ -3,7 +3,9 @@ import {
   changeFilterByAction,
   changeInitialPersonAction,
   changeLoadingAction,
-  changeVisibilityAction,
+  changeVisibilityColumnsAction,
+  changeVisibilityRowsAction,
+  changeVisibilityRowsDataAction,
   filterDataAction,
   sortDataAction
 } from "../actions";
@@ -41,10 +43,19 @@ const initialState: StateType = {
     "shirt_size": true,
     "app_name": true,
     "app_version": true,
-  }
+  },
+  visibilityRows: 1000
 }
 
-const changeVisibilityReducer = (state: StateType, action: ReturnType<typeof changeVisibilityAction>) => ({
+const changeVisibilityRowsReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsAction>) => ({
+  ...state,
+  currentDataPersons: state.currentDataPersons.slice(0, state.visibilityRows)
+})
+const changeVisibilityRowsDataReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsDataAction>) => ({
+  ...state,
+  visibilityRows: action.payload.num
+})
+const changeVisibilityColumnsReducer = (state: StateType, action: ReturnType<typeof changeVisibilityColumnsAction>) => ({
   ...state,
   visibilityColumns: {
     ...state.visibilityColumns,
@@ -56,11 +67,11 @@ const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDat
   return action.payload.searchButton
     ? {
       ...state,
-      currentDataPersons: filterPersons(state.initialDataPersons, action.payload.keyName, state.filterBy[action.payload.keyName])
+      currentDataPersons: filterPersons(state.currentDataPersons, action.payload.keyName, state.filterBy[action.payload.keyName])
     }
     : {
       ...state,
-      currentDataPersons: state.initialDataPersons,
+      currentDataPersons: state.initialDataPersons.slice(0, state.visibilityRows),
       filterBy: {
         ...initialState.filterBy,
         [action.payload.keyName]: "",
@@ -93,9 +104,9 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
     case action.payload.direction:
       return ({
         ...state,
-        currentDataPersons: state.initialDataPersons,
+        currentDataPersons: state.initialDataPersons.slice(0, state.visibilityRows),
         sortedBy: {
-          ...initialState.sortedBy,
+          ...state.sortedBy,
           [action.payload.keyName]: undefined,
         }
       })
@@ -105,7 +116,7 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
         ...state,
         currentDataPersons: sortPersons(state.currentDataPersons, action.payload.keyName, action.payload.direction),
         sortedBy: {
-          ...initialState.sortedBy,
+          ...state.sortedBy,
           [action.payload.keyName]: action.payload.direction,
         }
       })
@@ -121,5 +132,7 @@ export const rootReducer = createRootReducer(initialState)([
   [changeLoadingReducer, changeLoadingAction],
   [changeFilterByReducer, changeFilterByAction],
   [filterDataReducer, filterDataAction],
-  [changeVisibilityReducer, changeVisibilityAction]
+  [changeVisibilityColumnsReducer, changeVisibilityColumnsAction],
+  [changeVisibilityRowsDataReducer, changeVisibilityRowsDataAction],
+  [changeVisibilityRowsReducer, changeVisibilityRowsAction]
 ]);

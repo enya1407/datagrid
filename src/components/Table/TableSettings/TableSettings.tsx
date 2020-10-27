@@ -1,12 +1,13 @@
 import React from "react";
 import VisibilityColumns from "./VisibilityColumns/VisibilityColumns";
+import VisibilityRow from "./VisibilityRow/VisibilityRow";
 
 const TableSettings = () => {
 
   return (
     <div>
       <VisibilityColumns/>
-      <div></div>
+      <VisibilityRow></VisibilityRow>
     </div>
 
 

@@ -20,9 +20,19 @@ export const filterDataAction = (keyName: keyof PersonType, searchButton: boolea
   type: "START_FILTERING",
   payload: {keyName, searchButton},
 })
-export const changeVisibilityAction = (keyName: keyof PersonType) => ({
-  type: "CHANGE_VISIBILITY",
+export const changeVisibilityColumnsAction = (keyName: keyof PersonType) => ({
+  type: "CHANGE_VISIBILITY_COLUMNS",
   payload: {keyName},
 })
+export const changeVisibilityRowsDataAction = (num: number) => ({
+  type: "CHANGE_VISIBILITY_ROWS_DATA",
+  payload: {num},
+})
+export const changeVisibilityRowsAction = () => ({
+  type: "CHANGE_VISIBILITY_ROWS",
+})
+
+
+
 
 

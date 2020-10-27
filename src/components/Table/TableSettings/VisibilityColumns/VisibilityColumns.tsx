@@ -4,7 +4,7 @@ import {PersonType} from "../../../../types";
 import styles from "./VisibilityColumns.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {visibilityColumnsSelector} from "../../../../selector/selector";
-import {changeVisibilityAction} from "../../../../actions";
+import {changeVisibilityColumnsAction} from "../../../../actions";
 
 const VisibilityColumns = () => {
   const isVisibility = useSelector(visibilityColumnsSelector)
@@ -16,7 +16,7 @@ const VisibilityColumns = () => {
       <input type="checkbox"
              checked={isVisibility[data]}
              className={styles.input}
-             onClick={() => dispatch(changeVisibilityAction(data))}/>
+             onClick={() => dispatch(changeVisibilityColumnsAction(data))}/>
       {data}
     </div>
   ))

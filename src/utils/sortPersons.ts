@@ -8,11 +8,11 @@ const genderMap = {
 const sizeMap = {
   "3xl": 1,
   "2xl": 2,
-  xl: 3,
-  l: 4,
-  m: 5,
-  s: 6,
-  xs: 7,
+  "xl": 3,
+  "l": 4,
+  "m": 5,
+  "s": 6,
+  "xs": 7,
 }
 const numberSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
   sortedBy === "ascent"
@@ -27,6 +27,7 @@ const genderSort = (sortedBy: "ascent" | "decent") =>
 const sizeSort = (sortedBy: "ascent" | "decent") =>
   sortedBy === "ascent"
     ? (a: PersonType, b: PersonType) => {
+      console.log(sizeMap[a.shirt_size])
       if (sizeMap[a.shirt_size] > sizeMap[b.shirt_size]) {
         return 1;
       }
@@ -36,6 +37,7 @@ const sizeSort = (sortedBy: "ascent" | "decent") =>
       return 0;
     }
     : (a: PersonType, b: PersonType) => {
+      console.log("decent")
       if (sizeMap[a.shirt_size] > sizeMap[b.shirt_size]) {
         return -1;
       }
