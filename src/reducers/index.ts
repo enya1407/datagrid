@@ -8,6 +8,7 @@ import {
   changeVisibilityRowsAction,
   changeVisibilityRowsDataAction,
   filterDataAction,
+  isAsyncAction,
   sortDataAction
 } from "../actions";
 import {createRootReducer} from "../utils/createRootReducer";
@@ -31,7 +32,14 @@ const initialState: StateType = {
   },
   visibilityRows: 1000,
   visibilityBoolean: {showTrue: true, showFalse: true},
+  isAsync: false
 }
+
+const isAsyncReducer = (state: StateType, action: ReturnType<typeof isAsyncAction>) => ({
+  ...state,
+  isAsync: !state.isAsync
+});
+
 
 const changeVisibilityBooleansReducer = (
   state: StateType,
@@ -126,7 +134,6 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
   const direction = action.payload.direction;
 
   const sortedBy = {
-    ...state.sortedBy,
     [keyName]: direction
   };
   const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
@@ -137,7 +144,10 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
       return ({
         ...state,
         currentDataPersons: filteredPersons,
-        sortedBy
+        sortedBy: {
+          ...sortedBy,
+          [keyName]: undefined
+        }
       })
 
     default:
@@ -159,5 +169,6 @@ export const rootReducer = createRootReducer(initialState)([
   [changeVisibilityColumnsReducer, changeVisibilityColumnsAction],
   [changeVisibilityRowsDataReducer, changeVisibilityRowsDataAction],
   [changeVisibilityRowsReducer, changeVisibilityRowsAction],
-  [changeVisibilityBooleansReducer, changeVisibilityBooleansAction]
+  [changeVisibilityBooleansReducer, changeVisibilityBooleansAction],
+  [isAsyncReducer, isAsyncAction]
 ]);

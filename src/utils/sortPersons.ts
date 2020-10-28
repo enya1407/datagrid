@@ -6,13 +6,13 @@ const genderMap = {
 }
 
 const sizeMap = {
-  "3xl": 1,
-  "2xl": 2,
-  "xl": 3,
-  "l": 4,
-  "m": 5,
-  "s": 6,
-  "xs": 7,
+  "3XL": 1,
+  "2XL": 2,
+  "XL": 3,
+  "L": 4,
+  "M": 5,
+  "S": 6,
+  "XS": 7,
 }
 const numberSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
   sortedBy === "ascent"
@@ -27,7 +27,6 @@ const genderSort = (sortedBy: "ascent" | "decent") =>
 const sizeSort = (sortedBy: "ascent" | "decent") =>
   sortedBy === "ascent"
     ? (a: PersonType, b: PersonType) => {
-      console.log(sizeMap[a.shirt_size])
       if (sizeMap[a.shirt_size] > sizeMap[b.shirt_size]) {
         return 1;
       }
@@ -37,7 +36,6 @@ const sizeSort = (sortedBy: "ascent" | "decent") =>
       return 0;
     }
     : (a: PersonType, b: PersonType) => {
-      console.log("decent")
       if (sizeMap[a.shirt_size] > sizeMap[b.shirt_size]) {
         return -1;
       }
@@ -74,24 +72,23 @@ const sortPersons = (
   sortedBy: Partial<Record<keyof PersonType, "ascent" | "decent">>
 ) => {
   const newPersons = [...dataPersons];
-
-  if (sortedBy.gender) {
+  if (sortedBy.id) {
+    return newPersons.sort(sortFunctionMap(sortedBy.id).id);
+  } else if (sortedBy.gender) {
     return newPersons.sort(sortFunctionMap(sortedBy.gender).gender);
-  }
-  if (sortedBy.first_name) {
+  } else if (sortedBy.first_name) {
     return newPersons.sort(sortFunctionMap(sortedBy.first_name).first_name);
-  }
-  if (sortedBy.last_name) {
+  } else if (sortedBy.last_name) {
     return newPersons.sort(sortFunctionMap(sortedBy.last_name).last_name);
-  }
-  if (sortedBy.shirt_size) {
+  } else if (sortedBy.shirt_size) {
     return newPersons.sort(sortFunctionMap(sortedBy.shirt_size).shirt_size);
-  }
-  if (sortedBy.app_name) {
+  } else if (sortedBy.app_name) {
     return newPersons.sort(sortFunctionMap(sortedBy.app_name).app_name);
+  } else if (sortedBy.boolean) {
+    return newPersons.sort(sortFunctionMap(sortedBy.boolean).boolean);
   } else {
     return newPersons
   }
-  
+
 }
 export default sortPersons

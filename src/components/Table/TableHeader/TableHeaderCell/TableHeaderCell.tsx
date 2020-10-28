@@ -44,6 +44,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
         dispatch(filterDataAction(name, false))}>reset</Button>
     </div>
   );
+  
   const filterInPossible = (name !== "boolean" && name !== "id") ? (
     <Popover content={content}
              title={title}

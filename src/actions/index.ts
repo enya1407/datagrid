@@ -35,6 +35,10 @@ export const changeVisibilityBooleansAction = (keyName: keyof VisibilityBoolean)
   type: "CHANGE_VISIBILITY_BOOLEAN",
   payload: {keyName},
 })
+export const isAsyncAction = () => ({
+  type: "IS_ASYNC",
+})
+
 
 
 

@@ -3,7 +3,7 @@ export interface PersonType {
   first_name: string;
   last_name: string;
   gender: "Male" | "Female";
-  shirt_size: "3xl" | "2xl" | "xl" | "l" | "m" | "s" | "xs";
+  shirt_size: "3XL" | "2XL" | "XL" | "L" | "M" | "S" | "XS";
   app_name: string;
   boolean: boolean;
 }
@@ -22,5 +22,6 @@ export interface StateType {
   visibilityColumns: Record<keyof PersonType, boolean>;
   visibilityRows: number;
   visibilityBoolean: VisibilityBoolean;
+  isAsync: boolean;
 }
 
