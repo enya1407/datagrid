@@ -9,7 +9,7 @@ import {visibilityColumnsSelector} from "../../../selector/selector";
 const TableHeader = () => {
 
   const isVisibility = useSelector(visibilityColumnsSelector)
-  const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "app_version"]
+  const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
   const tableHeaderCell = ArrCellName.map((data: Partial<keyof PersonType>, i: number) => {
     if (isVisibility[data]) {
       return (

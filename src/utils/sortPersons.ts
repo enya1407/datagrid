@@ -53,6 +53,11 @@ const stringSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
     ? (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? 1 : -1
     : (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? -1 : 1;
 
+const booleanSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
+  sortedBy === "ascent"
+    ? (a: PersonType, b: PersonType) => a[key] > b[key] ? 1 : -1
+    : (a: PersonType, b: PersonType) => a[key] > b[key] ? -1 : 1;
+
 
 const sortFunctionMap = (sortedBy: "ascent" | "decent") => ({
   id: numberSort(sortedBy, "id"),
@@ -61,16 +66,32 @@ const sortFunctionMap = (sortedBy: "ascent" | "decent") => ({
   "last_name": stringSort(sortedBy, "last_name"),
   "shirt_size": sizeSort(sortedBy),
   "app_name": stringSort(sortedBy, "app_name"),
-  "app_version": numberSort(sortedBy, "app_version"),
+  "boolean": booleanSort(sortedBy, "boolean"),
 })
 
 const sortPersons = (
-  currentDataPersons: Array<PersonType>,
-  key: keyof PersonType,
-  sortedBy: "ascent" | "decent",
+  dataPersons: Array<PersonType>,
+  sortedBy: Partial<Record<keyof PersonType, "ascent" | "decent">>
 ) => {
-  const newPersons = [...currentDataPersons];
+  const newPersons = [...dataPersons];
 
-  return newPersons.sort(sortFunctionMap(sortedBy)[key])
+  if (sortedBy.gender) {
+    return newPersons.sort(sortFunctionMap(sortedBy.gender).gender);
+  }
+  if (sortedBy.first_name) {
+    return newPersons.sort(sortFunctionMap(sortedBy.first_name).first_name);
+  }
+  if (sortedBy.last_name) {
+    return newPersons.sort(sortFunctionMap(sortedBy.last_name).last_name);
+  }
+  if (sortedBy.shirt_size) {
+    return newPersons.sort(sortFunctionMap(sortedBy.shirt_size).shirt_size);
+  }
+  if (sortedBy.app_name) {
+    return newPersons.sort(sortFunctionMap(sortedBy.app_name).app_name);
+  } else {
+    return newPersons
+  }
+  
 }
 export default sortPersons

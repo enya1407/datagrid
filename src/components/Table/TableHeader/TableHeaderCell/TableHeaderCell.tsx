@@ -21,6 +21,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const cellStyle = isSorted[name]
     ? `${styles.th_active} ${styles.th_container}`
     : styles.th_container;
+  const searchStyle = text ? styles.img__search_active : styles.img__search
 
 
   const onKeyPressHandler = (event: any) => {
@@ -43,6 +44,13 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
         dispatch(filterDataAction(name, false))}>reset</Button>
     </div>
   );
+  const filterInPossible = (name !== "boolean" && name !== "id") ? (
+    <Popover content={content}
+             title={title}
+             trigger="click"
+             className={styles.search}>
+      <SearchOutlined className={searchStyle}/>
+    </Popover>) : <span></span>
 
   return (
     <th className={styles.th}>
@@ -56,12 +64,8 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
               onClick={() => dispatch(sortDataAction(name, "decent"))}/>
         </span>
         <p>{name}</p>
-        <Popover content={content}
-                 title={title}
-                 trigger="click"
-                 className={styles.search}>
-          <SearchOutlined className={styles.img__search}/>
-        </Popover>
+        {filterInPossible}
+
       </div>
     </th>
   )

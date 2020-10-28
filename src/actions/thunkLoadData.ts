@@ -10,7 +10,7 @@ const URL = `https://my.api.mockaroo.com/datagrid.json?key=${API_KEY}`;
 
 const fetchPersons: TFetchPersons = async () => {
   const response = await fetch(URL);
-
+  console.log(response)
   return await response.json();
 }
 

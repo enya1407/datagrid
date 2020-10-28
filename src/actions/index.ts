@@ -1,4 +1,4 @@
-import {PersonType} from "../types";
+import {PersonType, VisibilityBoolean} from "../types";
 
 export const changeInitialPersonAction = (persons: Array<PersonType>) => ({
   type: "CHANGE_INITIAL_PERSON",
@@ -30,6 +30,10 @@ export const changeVisibilityRowsDataAction = (num: number) => ({
 })
 export const changeVisibilityRowsAction = () => ({
   type: "CHANGE_VISIBILITY_ROWS",
+})
+export const changeVisibilityBooleansAction = (keyName: keyof VisibilityBoolean) => ({
+  type: "CHANGE_VISIBILITY_BOOLEAN",
+  payload: {keyName},
 })
 
 

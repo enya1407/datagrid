@@ -9,7 +9,7 @@ import {changeVisibilityColumnsAction} from "../../../../actions";
 const VisibilityColumns = () => {
   const isVisibility = useSelector(visibilityColumnsSelector)
   const dispatch = useDispatch();
-  const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "app_version"]
+  const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
 
   const columns = ArrCellName.map((data: Partial<keyof PersonType>, i: number) => (
     <div key={i}>

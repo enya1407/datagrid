@@ -3,6 +3,7 @@ import {
   changeFilterByAction,
   changeInitialPersonAction,
   changeLoadingAction,
+  changeVisibilityBooleansAction,
   changeVisibilityColumnsAction,
   changeVisibilityRowsAction,
   changeVisibilityRowsDataAction,
@@ -11,30 +12,14 @@ import {
 } from "../actions";
 import {createRootReducer} from "../utils/createRootReducer";
 import sortPersons from "../utils/sortPersons";
-import filterPersons from "../utils/filterPersons";
+import {filterPersons, filterPersonsByBoolean} from "../utils/filterPersons";
 
 const initialState: StateType = {
   isLoading: false,
   initialDataPersons: [],
   currentDataPersons: [],
-  sortedBy: {
-    id: undefined,
-    gender: undefined,
-    "first_name": undefined,
-    "last_name": undefined,
-    "shirt_size": undefined,
-    "app_name": undefined,
-    "app_version": undefined,
-  },
-  filterBy: {
-    id: "",
-    gender: "",
-    "first_name": "",
-    "last_name": "",
-    "shirt_size": "",
-    "app_name": "",
-    "app_version": "",
-  },
+  sortedBy: {},
+  filterBy: {},
   visibilityColumns: {
     id: true,
     gender: true,
@@ -42,15 +27,44 @@ const initialState: StateType = {
     "last_name": true,
     "shirt_size": true,
     "app_name": true,
-    "app_version": true,
+    "boolean": true,
   },
-  visibilityRows: 1000
+  visibilityRows: 1000,
+  visibilityBoolean: {showTrue: true, showFalse: true},
 }
 
-const changeVisibilityRowsReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsAction>) => ({
-  ...state,
-  currentDataPersons: state.currentDataPersons.slice(0, state.visibilityRows)
-})
+const changeVisibilityBooleansReducer = (
+  state: StateType,
+  action: ReturnType<typeof changeVisibilityBooleansAction>,
+) => {
+  const {keyName} = action.payload;
+
+  const visibilityBoolean = {
+    ...state.visibilityBoolean,
+    [keyName]: !state.visibilityBoolean[keyName]
+  };
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), visibilityBoolean);
+  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+  const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
+
+  return ({
+    ...state,
+    currentDataPersons: sortedPersons,
+    visibilityBoolean,
+  })
+}
+
+
+const changeVisibilityRowsReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsAction>) => {
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+  const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
+
+  return ({
+    ...state,
+    currentDataPersons: sortedPersons
+  })
+}
 const changeVisibilityRowsDataReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsDataAction>) => ({
   ...state,
   visibilityRows: action.payload.num
@@ -64,18 +78,26 @@ const changeVisibilityColumnsReducer = (state: StateType, action: ReturnType<typ
 })
 
 const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDataAction>) => {
+  const {keyName} = action.payload;
+
+  const filterBy = {
+    ...state.filterBy,
+    [keyName]: undefined
+  };
+
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy)
+  const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
+
   return action.payload.searchButton
     ? {
       ...state,
-      currentDataPersons: filterPersons(state.currentDataPersons, action.payload.keyName, state.filterBy[action.payload.keyName])
+      currentDataPersons: sortedPersons
     }
     : {
       ...state,
-      currentDataPersons: state.initialDataPersons.slice(0, state.visibilityRows),
-      filterBy: {
-        ...initialState.filterBy,
-        [action.payload.keyName]: "",
-      },
+      currentDataPersons: filterPersons(filteredPersons, filterBy)
+
     };
 }
 
@@ -100,28 +122,30 @@ const changeInitialPersonReducer = (state: StateType, action: ReturnType<typeof 
 });
 
 const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAction>) => {
-  switch (state.sortedBy[action.payload.keyName]) {
-    case action.payload.direction:
+  const keyName = action.payload.keyName;
+  const direction = action.payload.direction;
+
+  const sortedBy = {
+    ...state.sortedBy,
+    [keyName]: direction
+  };
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+
+  switch (state.sortedBy[keyName]) {
+    case direction:
       return ({
         ...state,
-        currentDataPersons: state.initialDataPersons.slice(0, state.visibilityRows),
-        sortedBy: {
-          ...state.sortedBy,
-          [action.payload.keyName]: undefined,
-        }
+        currentDataPersons: filteredPersons,
+        sortedBy
       })
 
     default:
       return ({
         ...state,
-        currentDataPersons: sortPersons(state.currentDataPersons, action.payload.keyName, action.payload.direction),
-        sortedBy: {
-          ...state.sortedBy,
-          [action.payload.keyName]: action.payload.direction,
-        }
+        currentDataPersons: sortPersons(filteredPersons, sortedBy),
+        sortedBy
       })
-
-
   }
 
 };
@@ -134,5 +158,6 @@ export const rootReducer = createRootReducer(initialState)([
   [filterDataReducer, filterDataAction],
   [changeVisibilityColumnsReducer, changeVisibilityColumnsAction],
   [changeVisibilityRowsDataReducer, changeVisibilityRowsDataAction],
-  [changeVisibilityRowsReducer, changeVisibilityRowsAction]
+  [changeVisibilityRowsReducer, changeVisibilityRowsAction],
+  [changeVisibilityBooleansReducer, changeVisibilityBooleansAction]
 ]);
