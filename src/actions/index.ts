@@ -1,4 +1,4 @@
-import {PersonType, VisibilityBoolean} from "../types";
+import {Gender, PersonType, ShirtSize, VisibilityBoolean} from "../types";
 
 export const changeInitialPersonAction = (persons: Array<PersonType>) => ({
   type: "CHANGE_INITIAL_PERSON",
@@ -38,6 +38,16 @@ export const changeVisibilityBooleansAction = (keyName: keyof VisibilityBoolean)
 export const isAsyncAction = () => ({
   type: "IS_ASYNC",
 })
+export const changeVisibilityGenderAction = (keyName: keyof Gender) => ({
+  type: "CHANGE_VISIBILITY_GENDER",
+  payload: {keyName},
+})
+export const changeVisibilityShirtSizeAction = (keyName: keyof ShirtSize) => ({
+  type: "CHANGE_VISIBILITY_SHIRT_SIZE",
+  payload: {keyName},
+})
+
+
 
 
 

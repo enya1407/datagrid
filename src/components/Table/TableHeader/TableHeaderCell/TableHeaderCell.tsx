@@ -1,11 +1,15 @@
-import {changeFilterByAction, filterDataAction, sortDataAction} from "../../../../actions";
+import {sortDataAction} from "../../../../actions";
 import React from "react";
 import styles from "./TableHeaderCell.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {filterBySelector, sortedBySelector} from "../../../../selector/selector";
 import {PersonType} from "../../../../types";
-import {CaretDownOutlined, CaretUpOutlined, SearchOutlined} from "@ant-design/icons";
-import {Button, Input, Popover} from "antd";
+import {CaretDownOutlined, CaretUpOutlined, FilterOutlined} from "@ant-design/icons";
+import {Popover} from "antd";
+import BooleanContent from "./FilterContent/BooleanContent";
+import GenderContent from "./FilterContent/GenderContent";
+import ShirtSizeContent from "./FilterContent/ShirtSizeContent";
+import TextContent from "./FilterContent/TextContent";
 
 interface TableHeaderCellProps {
   name: Partial<keyof PersonType>;
@@ -23,35 +27,27 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
     : styles.th_container;
   const searchStyle = text ? styles.img__search_active : styles.img__search
 
-
-  const onKeyPressHandler = (event: any) => {
-    if (event.keyCode === 13) {
-      dispatch(filterDataAction(name, true))
+  const content = () => {
+    switch (name) {
+      case 'gender':
+        return GenderContent()
+      case 'shirt_size':
+        return ShirtSizeContent()
+      case 'boolean':
+        return BooleanContent()
+      default:
+        return TextContent({name: name})
     }
   }
 
-  const title = <div>
-    <Input value={text} autoFocus={true} placeholder={`Search ${name}`} onKeyDown={(event) => onKeyPressHandler(event)}
-           onChange={(event) =>
-             dispatch(changeFilterByAction(name, event.target.value))}/>
-  </div>
-
-  const content = (
-    <div>
-      <Button onClick={(event) =>
-        dispatch(filterDataAction(name, true))}>search</Button>
-      <Button onClick={(event) =>
-        dispatch(filterDataAction(name, false))}>reset</Button>
-    </div>
-  );
-  
-  const filterInPossible = (name !== "boolean" && name !== "id") ? (
-    <Popover content={content}
-             title={title}
-             trigger="click"
-             className={styles.search}>
-      <SearchOutlined className={searchStyle}/>
-    </Popover>) : <span></span>
+  const filterInPossible =
+    name === "id"
+      ? (<span/>)
+      : (<Popover content={content}
+                  trigger="click"
+                  className={styles.search}>
+        <FilterOutlined className={searchStyle}/>
+      </Popover>)
 
   return (
     <th className={styles.th}>

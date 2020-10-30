@@ -22,17 +22,26 @@
     margin: auto 0;
 }
 
-.img__ascent, .img__decent, .img__search {
-    fontSize: 40px
+.img__search {
+    font-size: large;
+}
+
+.img__ascent, .img__decent {
+    font-size: medium;
 }
 
 .img__ascent_active, .img__decent_active, .img__search_active {
-    color: #1890ff
+    color: #1890ff;
+    font-size: large;
 }
 
 .img__ascent:hover, .img__decent:hover, .img__search:hover {
     color: grey;
     cursor: pointer;
+}
+
+.input {
+    margin-right: 10px;
 }
 
 

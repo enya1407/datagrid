@@ -5,15 +5,22 @@ import {
   changeLoadingAction,
   changeVisibilityBooleansAction,
   changeVisibilityColumnsAction,
+  changeVisibilityGenderAction,
   changeVisibilityRowsAction,
   changeVisibilityRowsDataAction,
+  changeVisibilityShirtSizeAction,
   filterDataAction,
   isAsyncAction,
   sortDataAction
 } from "../actions";
 import {createRootReducer} from "../utils/createRootReducer";
 import sortPersons from "../utils/sortPersons";
-import {filterPersons, filterPersonsByBoolean} from "../utils/filterPersons";
+import {
+  filterPersons,
+  filterPersonsByBoolean,
+  filterPersonsByGender,
+  filterPersonsByShirtSize
+} from "../utils/filterPersons";
 
 const initialState: StateType = {
   isLoading: false,
@@ -21,6 +28,8 @@ const initialState: StateType = {
   currentDataPersons: [],
   sortedBy: {},
   filterBy: {},
+  visibilityGender: {Male: true, Female: true},
+  visibilityShirtSize: {"3XL": true, "2XL": true, "XL": true, "L": true, "M": true, "S": true, "XS": true},
   visibilityColumns: {
     id: true,
     gender: true,
@@ -34,6 +43,46 @@ const initialState: StateType = {
   visibilityBoolean: {showTrue: true, showFalse: true},
   isAsync: false
 }
+
+
+const changeVisibilityShirtSizeReducer = (state: StateType, action: ReturnType<typeof changeVisibilityShirtSizeAction>) => {
+  const {keyName} = action.payload;
+  const visibilityShirtSize = {
+    ...state.visibilityShirtSize,
+    [keyName]: !state.visibilityShirtSize[keyName]
+  };
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  const filterByGender = filterPersonsByGender(filteredByBoolean, state.visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy)
+  const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
+
+  return ({
+    ...state,
+    currentDataPersons: sortedPersons,
+    visibilityShirtSize
+  });
+}
+
+const changeVisibilityGenderReducer = (state: StateType, action: ReturnType<typeof changeVisibilityGenderAction>) => {
+  const {keyName} = action.payload;
+  const visibilityGender = {
+    ...state.visibilityGender,
+    [keyName]: !state.visibilityGender[keyName]
+  };
+  const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  const filterByGender = filterPersonsByGender(filteredByBoolean, visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, state.visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy)
+  const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
+
+  return ({
+    ...state,
+    currentDataPersons: sortedPersons,
+    visibilityGender
+  });
+}
+
 
 const isAsyncReducer = (state: StateType, action: ReturnType<typeof isAsyncAction>) => ({
   ...state,
@@ -52,7 +101,9 @@ const changeVisibilityBooleansReducer = (
     [keyName]: !state.visibilityBoolean[keyName]
   };
   const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), visibilityBoolean);
-  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+  const filterByGender = filterPersonsByGender(filteredByBoolean, state.visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, state.visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy);
   const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
 
   return ({
@@ -65,7 +116,9 @@ const changeVisibilityBooleansReducer = (
 
 const changeVisibilityRowsReducer = (state: StateType, action: ReturnType<typeof changeVisibilityRowsAction>) => {
   const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
-  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+  const filterByGender = filterPersonsByGender(filteredByBoolean, state.visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, state.visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy);
   const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
 
   return ({
@@ -94,7 +147,9 @@ const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDat
   };
 
   const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
-  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy)
+  const filterByGender = filterPersonsByGender(filteredByBoolean, state.visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, state.visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy)
   const sortedPersons = sortPersons(filteredPersons, state.sortedBy)
 
   return action.payload.searchButton
@@ -104,8 +159,8 @@ const filterDataReducer = (state: StateType, action: ReturnType<typeof filterDat
     }
     : {
       ...state,
-      currentDataPersons: filterPersons(filteredPersons, filterBy)
-
+      currentDataPersons: filterPersons(filteredPersons, filterBy),
+      filterBy
     };
 }
 
@@ -122,12 +177,16 @@ const changeLoadingReducer = (state: StateType, action: ReturnType<typeof change
   isLoading: action.payload.isLoading,
 });
 
-const changeInitialPersonReducer = (state: StateType, action: ReturnType<typeof changeInitialPersonAction>) => ({
-  ...state,
-  initialDataPersons: action.payload.persons,
-  currentDataPersons: action.payload.persons,
-  isLoading: false,
-});
+const changeInitialPersonReducer = (state: StateType, action: ReturnType<typeof changeInitialPersonAction>) => {
+  const dataPersons = action.payload.persons
+  const filteredByBoolean = filterPersonsByBoolean(dataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
+  return ({
+    ...state,
+    initialDataPersons: dataPersons,
+    currentDataPersons: filteredByBoolean,
+    isLoading: false,
+  })
+}
 
 const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAction>) => {
   const keyName = action.payload.keyName;
@@ -137,7 +196,9 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
     [keyName]: direction
   };
   const filteredByBoolean = filterPersonsByBoolean(state.initialDataPersons.slice(0, state.visibilityRows), state.visibilityBoolean);
-  const filteredPersons = filterPersons(filteredByBoolean, state.filterBy);
+  const filterByGender = filterPersonsByGender(filteredByBoolean, state.visibilityGender)
+  const filterByShirtSize = filterPersonsByShirtSize(filterByGender, state.visibilityShirtSize)
+  const filteredPersons = filterPersons(filterByShirtSize, state.filterBy);
 
   switch (state.sortedBy[keyName]) {
     case direction:
@@ -170,5 +231,8 @@ export const rootReducer = createRootReducer(initialState)([
   [changeVisibilityRowsDataReducer, changeVisibilityRowsDataAction],
   [changeVisibilityRowsReducer, changeVisibilityRowsAction],
   [changeVisibilityBooleansReducer, changeVisibilityBooleansAction],
-  [isAsyncReducer, isAsyncAction]
+  [isAsyncReducer, isAsyncAction],
+  [changeVisibilityGenderReducer, changeVisibilityGenderAction],
+  [changeVisibilityShirtSizeReducer, changeVisibilityShirtSizeAction]
+
 ]);

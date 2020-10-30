@@ -1,3 +1,18 @@
+export interface Gender {
+  Male: string;
+  Female: string;
+}
+
+export interface ShirtSize {
+  "3XL": string;
+  "2XL": string;
+  "XL": string;
+  "L": string;
+  "M": string;
+  "S": string;
+  "XS": string;
+}
+
 export interface PersonType {
   id: number;
   first_name: string;
@@ -19,6 +34,8 @@ export interface StateType {
   currentDataPersons: Array<PersonType>;
   sortedBy: Partial<Record<keyof PersonType, "ascent" | "decent">>;
   filterBy: Partial<Record<keyof PersonType, string>>;
+  visibilityGender: Record<keyof Gender, boolean>;
+  visibilityShirtSize: Record<keyof ShirtSize, boolean>;
   visibilityColumns: Record<keyof PersonType, boolean>;
   visibilityRows: number;
   visibilityBoolean: VisibilityBoolean;

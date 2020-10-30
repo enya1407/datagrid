@@ -19,10 +19,31 @@ const numberSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
     ? (a: PersonType, b: PersonType) => a[key] > b[key] ? 1 : -1
     : (a: PersonType, b: PersonType) => a[key] > b[key] ? -1 : 1;
 
+const stringSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
+  sortedBy === "ascent"
+    ? (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? 1 : -1
+    : (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? -1 : 1;
+
 const genderSort = (sortedBy: "ascent" | "decent") =>
   sortedBy === "ascent"
-    ? (a: PersonType, b: PersonType) => genderMap[a.gender] > genderMap[b.gender] ? 1 : -1
-    : (a: PersonType, b: PersonType) => genderMap[a.gender] > genderMap[b.gender] ? -1 : 1;
+    ? (a: PersonType, b: PersonType) => {
+      if (genderMap[a.gender] > genderMap[b.gender]) {
+        return 1;
+      }
+      if (genderMap[a.gender] < genderMap[b.gender]) {
+        return -1;
+      }
+      return 0;
+    }
+    : (a: PersonType, b: PersonType) => {
+      if (genderMap[a.gender] > genderMap[b.gender]) {
+        return -1;
+      }
+      if (genderMap[a.gender] < genderMap[b.gender]) {
+        return 1;
+      }
+      return 0;
+    }
 
 const sizeSort = (sortedBy: "ascent" | "decent") =>
   sortedBy === "ascent"
@@ -46,16 +67,26 @@ const sizeSort = (sortedBy: "ascent" | "decent") =>
     }
 
 
-const stringSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
-  sortedBy === "ascent"
-    ? (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? 1 : -1
-    : (a: PersonType, b: PersonType) => (a[key] as string).toLowerCase() > (b[key] as string).toLowerCase() ? -1 : 1;
-
 const booleanSort = (sortedBy: "ascent" | "decent", key: keyof PersonType) =>
   sortedBy === "ascent"
-    ? (a: PersonType, b: PersonType) => a[key] > b[key] ? 1 : -1
-    : (a: PersonType, b: PersonType) => a[key] > b[key] ? -1 : 1;
-
+    ? (a: PersonType, b: PersonType) => {
+      if (a[key] > b[key]) {
+        return 1;
+      }
+      if (a[key] < b[key]) {
+        return -1;
+      }
+      return 0;
+    }
+    : (a: PersonType, b: PersonType) => {
+      if (a[key] > b[key]) {
+        return -1;
+      }
+      if (a[key] < b[key]) {
+        return 1;
+      }
+      return 0;
+    }
 
 const sortFunctionMap = (sortedBy: "ascent" | "decent") => ({
   id: numberSort(sortedBy, "id"),

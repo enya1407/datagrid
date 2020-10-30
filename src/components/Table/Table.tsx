@@ -18,11 +18,8 @@ const Table = () => {
   })
 
   useEffect(() => {
-      console.log(data)
       dispatch(changeLoadingAction(true))
       isAsync ? dispatch(loadPersonsAction()) : dispatch(changeInitialPersonAction(data))
-
-
     },
     [isAsync])
 
