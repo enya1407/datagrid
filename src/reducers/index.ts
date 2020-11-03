@@ -65,11 +65,14 @@ const changeHighlightedRowsReducer = (state: StateType, action: ReturnType<typeo
     highlightedRows
   });
 }
-const deleteRowsReducer = (state: StateType, action: ReturnType<typeof deleteRowsAction>) => ({
-  ...state,
-  initialDataPersons: deleteRows(state.initialDataPersons, state.highlightedRows),
-  currentDataPersons: deleteRows(state.currentDataPersons, state.highlightedRows),
-});
+const deleteRowsReducer = (state: StateType, action: ReturnType<typeof deleteRowsAction>) => {
+  const {selected} = action.payload
+  return ({
+    ...state,
+    initialDataPersons: deleteRows(state.initialDataPersons, state.highlightedRows, selected),
+    currentDataPersons: deleteRows(state.currentDataPersons, state.highlightedRows, selected),
+  });
+}
 
 
 const changeVisibilityShirtSizeReducer = (state: StateType, action: ReturnType<typeof changeVisibilityShirtSizeAction>) => {

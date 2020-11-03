@@ -1,13 +1,37 @@
 .td {
-    border: 1px solid black;
+    border: 1px solid #455A64;;
     padding: 5px;
-    width: 100px;
+    width: 10px;
     overflow: hidden;
+    /*background-color: white;*/
 
+}
+
+.narrow {
+    flex-grow: 1;
+}
+
+.wide {
+    flex-grow: 4;
+}
+
+.average {
+    flex-grow: 2;
 }
 
 .tr_active:hover {
     cursor: pointer;
+
+}
+
+.tr {
+    background-color: white;
+}
+
+.tr,
+.tr_active {
+    display: flex;
+    position: relative;
 }
 
 .tr:hover {
@@ -16,7 +40,7 @@
 }
 
 .tr_active {
-    background-color: #1890ff
+    background-color: #0288d1
 }
 
 .del__row {
@@ -27,6 +51,7 @@
     border: 1px #00000000 solid;
     padding: 0px;
     width: 40px;
-    overflow: hidden;
     background-color: white;
+    position: absolute;
+    right: -40px;
 }

@@ -1,0 +1,11 @@
+.tr {
+    position: sticky;
+    top: 155px;
+    z-index: 4;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    background-color: #b3e5fc;
+
+
+}

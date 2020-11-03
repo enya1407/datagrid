@@ -1,0 +1,11 @@
+.setting {
+    position: sticky;
+    top: 70px;
+    z-index: 4;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 100%;
+    background-color: #E1F5FE;
+    height: 85px;
+}

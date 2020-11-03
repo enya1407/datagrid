@@ -1,8 +1,21 @@
 .th {
     border: 1px solid black;
     position: relative;
-    width: 100px;
     overflow: hidden;
+    padding: 5px;
+    width: 10px;
+}
+
+.narrow {
+    flex-grow: 1;
+}
+
+.wide {
+    flex-grow: 4;
+}
+
+.average {
+    flex-grow: 2;
 }
 
 .th_container {

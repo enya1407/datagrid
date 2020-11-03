@@ -50,8 +50,9 @@ export const changeHighlightedRowsAction = (keyName: number, ctrl: boolean) => (
   type: "CHANGE_HIGHLIGHTED_ROWS",
   payload: {keyName, ctrl},
 })
-export const deleteRowsAction = () => ({
-  type: "CHANGE_ROWS",
+export const deleteRowsAction = (selected: number) => ({
+  type: "DELETE_ROWS",
+  payload: {selected},
 })
 
 

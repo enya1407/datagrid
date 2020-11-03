@@ -20,6 +20,19 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const isSorted = useSelector(sortedBySelector)
   const text = useSelector(filterBySelector)[name]
 
+  const cellWidth = () => {
+    switch (name) {
+      case "id" :
+      case "shirt_size":
+        return `${styles.th} ${styles.narrow}`
+      case "gender":
+      case"boolean":
+        return `${styles.th} ${styles.average}`
+      default:
+        return `${styles.th} ${styles.wide}`
+    }
+  }
+
   const imgAscentStyle = isSorted[name] === "ascent" ? styles.img__ascent_active : styles.img__ascent
   const imgDecentStyle = isSorted[name] === "decent" ? styles.img__decent_active : styles.img__decent
   const cellStyle = isSorted[name]
@@ -50,7 +63,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
       </Popover>)
 
   return (
-    <th className={styles.th}>
+    <div className={cellWidth()}>
       <div className={cellStyle}>
         <span className={styles.sort__btn}>
           <CaretUpOutlined
@@ -64,7 +77,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
         {filterInPossible}
 
       </div>
-    </th>
+    </div>
   )
 }
 export default TableHeaderCell

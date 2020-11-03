@@ -10,6 +10,7 @@ const TableHeader = () => {
 
   const isVisibility = useSelector(visibilityColumnsSelector)
   const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
+  
   const tableHeaderCell = ArrCellName.map((data: Partial<keyof PersonType>, i: number) => {
     if (isVisibility[data]) {
       return (
@@ -18,11 +19,10 @@ const TableHeader = () => {
     }
   })
   return (
-    <thead>
-    <tr className={styles.tr}>
+    <div className={styles.tr}>
       {tableHeaderCell}
-    </tr>
-    </thead>
+    </div>
+
   )
 }
 export default TableHeader

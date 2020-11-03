@@ -9,6 +9,7 @@ import {PersonType} from "../../types";
 import {commonSelector} from "../../selector/selector";
 import {Spin} from "antd";
 import data from "../../data"
+import TableSettings from "./TableSettings/TableSettings";
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -30,13 +31,11 @@ const Table = () => {
   }
 
   return (
-    <table className={styles.table}>
-      <caption className={styles.caption}>Таблица</caption>
+    <div className={styles.table}>
+      <TableSettings/>
       <TableHeader/>
-      <tbody>
       {rows}
-      </tbody>
-    </table>
+    </div>
   )
 }
 

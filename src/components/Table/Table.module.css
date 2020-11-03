@@ -1,12 +1,6 @@
 
 .table {
-    border: 1px solid black;
+    width: 900px;
     margin: 0 auto;
-    border-collapse: collapse;
-    width: 90%;
 }
 
-.caption {
-    text-align: center;
-    caption-side: top;
-}

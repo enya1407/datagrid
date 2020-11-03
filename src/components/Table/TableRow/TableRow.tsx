@@ -22,10 +22,23 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   }
 
   const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
+
+  const cellWidth = (data: keyof PersonType) => {
+    switch (data) {
+      case "id" :
+      case "shirt_size":
+        return `${styles.td} ${styles.narrow}`
+      case "gender":
+      case"boolean":
+
+        return `${styles.td} ${styles.average}`
+      default:
+        return `${styles.td} ${styles.wide}`
+    }
+  }
   const tableData = ArrCellName.map((data: keyof PersonType, i: number) => {
     if (isVisibility[data]) {
-      return (
-        <td className={styles.td} key={i}>{person[data].toString()}</td>
+      return (<div className={cellWidth(data)} key={i}>{person[data].toString()}</div>
       )
     }
   })
@@ -33,11 +46,12 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   const styleRows = highlightedRows.includes(person.id) ? styles.tr_active : styles.tr
   const cellDelRow = highlightedRows.includes(person.id) ? styles.del__row_active : styles.del__row
   return (
-    <tr className={styleRows} onClick={(event) => onCtrlKeyHandler(event)}>
+
+    <div className={styleRows} onClick={(event) => onCtrlKeyHandler(event)}>
       {tableData}
-      <td className={cellDelRow}><Button className={styles.delRowButton}
-                                         onClick={() => dispatch(deleteRowsAction())}>del</Button></td>
-    </tr>
+      <div className={cellDelRow}><Button className={styles.delRowButton}
+                                          onClick={() => dispatch(deleteRowsAction(person.id))}>del</Button></div>
+    </div>
   )
 }
 export default TableRow

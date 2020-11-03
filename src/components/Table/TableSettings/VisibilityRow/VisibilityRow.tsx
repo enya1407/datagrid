@@ -14,22 +14,25 @@ const VisibilityRow = () => {
   }
 
   return (
-    <Row justify="center" gutter={24} style={{marginTop: "16px"}}>
-      <Col>
-        Row count(1-1000):
-      </Col>
-      <Col>
-        <InputNumber min={1} max={1000} precision={0} value={isVisibility}
-                     onChange={(event) => dispatch(changeVisibilityRowsDataAction(Number(event)))}
-                     onKeyDown={(event) => onKeyPressHandler(event)}
-        />
-      </Col>
-      <Col>
+    <Col>
+      <Row justify="center" gutter={24}>
+        <Col>
+          Row count(1-1000):
+        </Col>
+        <Col>
+          <InputNumber min={1} max={1000} precision={0} value={isVisibility}
+                       onChange={(event) => dispatch(changeVisibilityRowsDataAction(Number(event)))}
+                       onKeyDown={(event) => onKeyPressHandler(event)}
+          />
+        </Col>
+
+      </Row>
+      <Row justify="center" style={{marginTop: "10px"}}>
         <Button onClick={() => dispatch(changeVisibilityRowsAction())}>
           Send
         </Button>
-      </Col>
-    </Row>
+      </Row>
+    </Col>
   )
 }
 export default VisibilityRow

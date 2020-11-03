@@ -1,6 +1,14 @@
 .header {
-    color: #1890ff;
+    color: #0288d1;
     margin: 0;
     padding: 10px;
-    background-color: #1890ff21;
+    position: sticky;
+    top: 0px;
+    z-index: 4;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    width: 100%;
+    background-color: #E1F5FE;
+    height: 70px;
 }
