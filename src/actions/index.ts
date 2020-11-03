@@ -46,6 +46,15 @@ export const changeVisibilityShirtSizeAction = (keyName: keyof ShirtSize) => ({
   type: "CHANGE_VISIBILITY_SHIRT_SIZE",
   payload: {keyName},
 })
+export const changeHighlightedRowsAction = (keyName: number, ctrl: boolean) => ({
+  type: "CHANGE_HIGHLIGHTED_ROWS",
+  payload: {keyName, ctrl},
+})
+export const deleteRowsAction = () => ({
+  type: "CHANGE_ROWS",
+})
+
+
 
 
 

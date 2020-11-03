@@ -40,5 +40,6 @@ export interface StateType {
   visibilityRows: number;
   visibilityBoolean: VisibilityBoolean;
   isAsync: boolean;
+  highlightedRows: Array<number>;
 }
 

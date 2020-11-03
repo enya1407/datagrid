@@ -1,6 +1,7 @@
 import {StateType} from '../types/index';
 import {
   changeFilterByAction,
+  changeHighlightedRowsAction,
   changeInitialPersonAction,
   changeLoadingAction,
   changeVisibilityBooleansAction,
@@ -9,6 +10,7 @@ import {
   changeVisibilityRowsAction,
   changeVisibilityRowsDataAction,
   changeVisibilityShirtSizeAction,
+  deleteRowsAction,
   filterDataAction,
   isAsyncAction,
   sortDataAction
@@ -21,6 +23,7 @@ import {
   filterPersonsByGender,
   filterPersonsByShirtSize
 } from "../utils/filterPersons";
+import deleteRows from "../utils/deleteRows";
 
 const initialState: StateType = {
   isLoading: false,
@@ -41,8 +44,32 @@ const initialState: StateType = {
   },
   visibilityRows: 1000,
   visibilityBoolean: {showTrue: true, showFalse: true},
-  isAsync: false
+  isAsync: false,
+  highlightedRows: []
 }
+const changeHighlightedRowsReducer = (state: StateType, action: ReturnType<typeof changeHighlightedRowsAction>) => {
+  const {keyName, ctrl} = action.payload;
+
+  const oneLine = state.highlightedRows.includes(keyName)
+    ? state.highlightedRows.filter(el => el !== keyName)
+    : [...[], keyName];
+
+  const multipleLine = state.highlightedRows.includes(keyName)
+    ? state.highlightedRows.filter(el => el !== keyName)
+    : [...state.highlightedRows, keyName];
+
+  const highlightedRows = ctrl ? multipleLine : oneLine
+
+  return ({
+    ...state,
+    highlightedRows
+  });
+}
+const deleteRowsReducer = (state: StateType, action: ReturnType<typeof deleteRowsAction>) => ({
+  ...state,
+  initialDataPersons: deleteRows(state.initialDataPersons, state.highlightedRows),
+  currentDataPersons: deleteRows(state.currentDataPersons, state.highlightedRows),
+});
 
 
 const changeVisibilityShirtSizeReducer = (state: StateType, action: ReturnType<typeof changeVisibilityShirtSizeAction>) => {
@@ -233,6 +260,7 @@ export const rootReducer = createRootReducer(initialState)([
   [changeVisibilityBooleansReducer, changeVisibilityBooleansAction],
   [isAsyncReducer, isAsyncAction],
   [changeVisibilityGenderReducer, changeVisibilityGenderAction],
-  [changeVisibilityShirtSizeReducer, changeVisibilityShirtSizeAction]
-
+  [changeVisibilityShirtSizeReducer, changeVisibilityShirtSizeAction],
+  [changeHighlightedRowsReducer, changeHighlightedRowsAction],
+  [deleteRowsReducer, deleteRowsAction]
 ]);
