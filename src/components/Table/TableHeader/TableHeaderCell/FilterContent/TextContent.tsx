@@ -5,6 +5,8 @@ import {changeFilterByAction, filterDataAction} from "../../../../../actions";
 import {PersonType} from "../../../../../types";
 import {filterBySelector} from "../../../../../selector/selector";
 
+import styles from "./FilterContent.module.css"
+
 interface TextContentProps {
   name: Partial<keyof PersonType>;
 }
@@ -18,9 +20,9 @@ const TextContent: React.FC<TextContentProps> = ({name}) => {
       dispatch(filterDataAction(name, true))
     }
   }
-  
+
   return (<div>
-      <Input value={text} autoFocus={true} placeholder={`Search ${name}`}
+      <Input value={text} className={styles.input} autoFocus={true} placeholder={`Search ${name}`}
              onKeyDown={(event) => onKeyPressHandler(event)}
              onChange={(event) =>
                dispatch(changeFilterByAction(name, event.target.value))}/>

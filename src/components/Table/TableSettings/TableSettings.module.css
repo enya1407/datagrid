@@ -1,11 +1,17 @@
 .setting {
     position: sticky;
-    top: 70px;
+    top: 60px;
     z-index: 4;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     background-color: #E1F5FE;
-    height: 85px;
+    height: 100px;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
 }

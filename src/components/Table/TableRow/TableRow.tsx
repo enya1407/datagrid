@@ -16,9 +16,12 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   const dispatch = useDispatch()
 
   const onCtrlKeyHandler = (event: any) => {
-    (event.ctrlKey)
-      ? dispatch(changeHighlightedRowsAction(person.id, true))
-      : dispatch(changeHighlightedRowsAction(person.id, false))
+    if (event.ctrlKey) {
+      return dispatch(changeHighlightedRowsAction(person.id, "ctrl"))
+    } else if (event.shiftKey) {
+      return dispatch(changeHighlightedRowsAction(person.id, "shift"))
+    } else dispatch(changeHighlightedRowsAction(person.id, ""))
+
   }
 
   const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
@@ -26,8 +29,8 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   const cellWidth = (data: keyof PersonType) => {
     switch (data) {
       case "id" :
-      case "shirt_size":
         return `${styles.td} ${styles.narrow}`
+      case "shirt_size":
       case "gender":
       case"boolean":
 

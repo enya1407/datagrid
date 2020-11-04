@@ -23,10 +23,10 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const cellWidth = () => {
     switch (name) {
       case "id" :
-      case "shirt_size":
         return `${styles.th} ${styles.narrow}`
       case "gender":
       case"boolean":
+      case "shirt_size":
         return `${styles.th} ${styles.average}`
       default:
         return `${styles.th} ${styles.wide}`
@@ -73,7 +73,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
               className={imgDecentStyle}
               onClick={() => dispatch(sortDataAction(name, "decent"))}/>
         </span>
-        <p>{name}</p>
+        <p className={styles.p}>{name}</p>
         {filterInPossible}
 
       </div>

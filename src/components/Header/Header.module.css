@@ -1,7 +1,7 @@
 .header {
-    color: #0288d1;
+    color: black;
     margin: 0;
-    padding: 10px;
+    padding: 5px;
     position: sticky;
     top: 0px;
     z-index: 4;
@@ -9,6 +9,6 @@
     justify-content: space-around;
     flex-wrap: nowrap;
     width: 100%;
-    background-color: #E1F5FE;
-    height: 70px;
+    background-color: #b3e5fc;
+    height: 60px;
 }

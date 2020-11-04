@@ -4,6 +4,11 @@
     align-items: start;
 }
 
-.toggle {
+.toggle, .toggle__virtualize {
     margin-right: 10px;
 }
+
+.toggle__virtualize {
+    margin-top: 8px;
+}
+

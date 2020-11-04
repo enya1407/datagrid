@@ -24,6 +24,7 @@ import {
   filterPersonsByShirtSize
 } from "../utils/filterPersons";
 import deleteRows from "../utils/deleteRows";
+import selectRowsWithShift from "../utils/selectRowsWithShift";
 
 const initialState: StateType = {
   isLoading: false,
@@ -48,17 +49,22 @@ const initialState: StateType = {
   highlightedRows: []
 }
 const changeHighlightedRowsReducer = (state: StateType, action: ReturnType<typeof changeHighlightedRowsAction>) => {
-  const {keyName, ctrl} = action.payload;
+  const {id, pressedButton} = action.payload;
 
-  const oneLine = state.highlightedRows.includes(keyName)
-    ? state.highlightedRows.filter(el => el !== keyName)
-    : [...[], keyName];
+  const highlight = () => {
 
-  const multipleLine = state.highlightedRows.includes(keyName)
-    ? state.highlightedRows.filter(el => el !== keyName)
-    : [...state.highlightedRows, keyName];
-
-  const highlightedRows = ctrl ? multipleLine : oneLine
+    switch (pressedButton) {
+      case "ctrl":
+        return [...state.highlightedRows, id];
+      case "shift":
+        return selectRowsWithShift(state.initialDataPersons, state.highlightedRows, id);
+      default:
+        return [...[], id];
+    }
+  }
+  const highlightedRows = state.highlightedRows.includes(id)
+    ? state.highlightedRows.filter(el => el !== id)
+    : highlight()
 
   return ({
     ...state,
