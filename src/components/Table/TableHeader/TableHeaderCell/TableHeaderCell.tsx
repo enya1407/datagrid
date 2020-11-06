@@ -55,7 +55,7 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
 
   const filterInPossible =
     name === "id"
-      ? (<span/>)
+      ? null
       : (<Popover content={content}
                   trigger="click"
                   className={styles.search}>

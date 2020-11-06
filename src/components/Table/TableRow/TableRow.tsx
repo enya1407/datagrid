@@ -26,6 +26,7 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
 
   const ArrCellName: Array<keyof PersonType> = ["id", "first_name", "last_name", "gender", "shirt_size", "app_name", "boolean"]
 
+
   const cellWidth = (data: keyof PersonType) => {
     switch (data) {
       case "id" :
@@ -39,6 +40,7 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
         return `${styles.td} ${styles.wide}`
     }
   }
+
   const tableData = ArrCellName.map((data: keyof PersonType, i: number) => {
     if (isVisibility[data]) {
       return (<div className={cellWidth(data)} key={i}>{person[data].toString()}</div>
@@ -46,11 +48,11 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
     }
   })
 
-  const styleRows = highlightedRows.includes(person.id) ? styles.tr_active : styles.tr
+  const styleRow = highlightedRows.includes(person.id) ? styles.tr_active : styles.tr
   const cellDelRow = highlightedRows.includes(person.id) ? styles.del__row_active : styles.del__row
   return (
 
-    <div className={styleRows} onClick={(event) => onCtrlKeyHandler(event)}>
+    <div className={styleRow} onClick={(event) => onCtrlKeyHandler(event)}>
       {tableData}
       <div className={cellDelRow}><Button className={styles.delRowButton}
                                           onClick={() => dispatch(deleteRowsAction(person.id))}>del</Button></div>

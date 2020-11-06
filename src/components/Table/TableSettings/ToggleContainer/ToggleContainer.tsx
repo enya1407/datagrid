@@ -18,7 +18,7 @@ const ToggleContainer = () => {
                 }}/>async
       </div>
       <div>
-        <Switch className={styles.toggle__virtualize} checked={isAsync}
+        <Switch className={styles.toggle__virtualize} checked={false}
         />virtualize
       </div>
     </div>

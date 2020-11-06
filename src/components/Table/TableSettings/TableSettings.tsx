@@ -14,7 +14,6 @@ const TableSettings = () => {
       <VisibilityColumns/>
       <VisibilityRow/>
       <ToggleContainer/>
-      <ExportCSVButton/>
       <div className={styles.container}>
         <ExportCSVButton/>
         <ShowQuerystringButton/>

@@ -13,6 +13,7 @@ import {
   deleteRowsAction,
   filterDataAction,
   isAsyncAction,
+  loadOldDataAction,
   sortDataAction
 } from "../actions";
 import {createRootReducer} from "../utils/createRootReducer";
@@ -27,7 +28,7 @@ import deleteRows from "../utils/deleteRows";
 import selectRowsWithShift from "../utils/selectRowsWithShift";
 
 const initialState: StateType = {
-  isLoading: false,
+  isLoading: true,
   initialDataPersons: [],
   currentDataPersons: [],
   sortedBy: {},
@@ -48,6 +49,11 @@ const initialState: StateType = {
   isAsync: false,
   highlightedRows: []
 }
+
+const loadOldDataReducer = (state: StateType, action: ReturnType<typeof loadOldDataAction>) => ({
+  isLoading: false,
+  ...action.payload.state,
+})
 const changeHighlightedRowsReducer = (state: StateType, action: ReturnType<typeof changeHighlightedRowsAction>) => {
   const {id, pressedButton} = action.payload;
 
@@ -258,6 +264,7 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
 };
 
 export const rootReducer = createRootReducer(initialState)([
+  [loadOldDataReducer, loadOldDataAction],
   [changeInitialPersonReducer, changeInitialPersonAction],
   [sortDataReducer, sortDataAction],
   [changeLoadingReducer, changeLoadingAction],

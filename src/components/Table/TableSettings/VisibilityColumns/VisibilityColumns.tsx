@@ -16,7 +16,7 @@ const VisibilityColumns = () => {
       <input type="checkbox"
              checked={isVisibility[data]}
              className={styles.input}
-             onClick={() => dispatch(changeVisibilityColumnsAction(data))}/>
+             onChange={() => dispatch(changeVisibilityColumnsAction(data))}/>
       {data}
     </div>
   ))

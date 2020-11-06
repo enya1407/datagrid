@@ -1,5 +1,10 @@
-import {Gender, PersonType, ShirtSize, VisibilityBoolean} from "../types";
+import {Gender, PersonType, ShirtSize, StateType, VisibilityBoolean} from "../types";
 
+
+export const loadOldDataAction = (state: StateType) => ({
+  type: "LOAD_DATA_ACTION",
+  payload: {state},
+})
 export const changeInitialPersonAction = (persons: Array<PersonType>) => ({
   type: "CHANGE_INITIAL_PERSON",
   payload: {persons},
