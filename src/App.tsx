@@ -4,15 +4,14 @@ import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {commonSelector} from "./selector/selector";
-import {changeInitialPersonAction, changeLoadingAction, loadOldDataAction} from "./actions";
-import loadPersonsAction from "./actions/thunkLoadData";
+import {changeLoadingAction, loadOldParamsAction, writeRawDataAction} from "./actions";
 import data from "./data";
+import loadPersonsAction from "./actions/thunkLoadData";
 
 const App = () => {
   const {
-    initialDataPersons,
-    currentDataPersons,
     sortedBy,
+    searchedValue,
     filterBy,
     visibilityGender,
     visibilityShirtSize,
@@ -26,42 +25,43 @@ const App = () => {
 
   useEffect(() => {
     dispatch(changeLoadingAction(true))
-    const dataLocalStorage = window.localStorage.getItem('state')
+    const dataLocalStorage = window.localStorage.getItem('params');
 
-    if (dataLocalStorage != null) dispatch(loadOldDataAction(JSON.parse(dataLocalStorage)))
+    dataLocalStorage != null
+      ? dispatch(loadOldParamsAction(JSON.parse(dataLocalStorage)))
+      : dispatch(writeRawDataAction(data))
   }, [])
 
   useEffect(() => {
       dispatch(changeLoadingAction(true))
-      isAsync ? dispatch(loadPersonsAction()) : dispatch(changeInitialPersonAction(data))
+      isAsync ? dispatch(loadPersonsAction()) : dispatch(writeRawDataAction(data))
     },
     [isAsync])
 
   useEffect(() => {
-    const state = {
-      initialDataPersons,
-      currentDataPersons,
+    const params = {
+      isAsync,
       sortedBy,
+      searchedValue,
       filterBy,
       visibilityGender,
       visibilityShirtSize,
       visibilityColumns,
       visibilityRows,
       visibilityBoolean,
-      isAsync,
       highlightedRows
     };
-    window.localStorage.setItem("state", JSON.stringify(state))
-  }, [initialDataPersons,
-    currentDataPersons,
+    window.localStorage.setItem("params", JSON.stringify(params))
+  }, [
+    isAsync,
     sortedBy,
+    searchedValue,
     filterBy,
     visibilityGender,
     visibilityShirtSize,
     visibilityColumns,
     visibilityRows,
     visibilityBoolean,
-    isAsync,
     highlightedRows])
 
   return (

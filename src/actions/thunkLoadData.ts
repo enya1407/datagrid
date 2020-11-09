@@ -1,4 +1,4 @@
-import {changeInitialPersonAction} from "./index";
+import {writeRawDataAction} from "./index";
 import {PersonType} from "../types";
 import {ThunkDispatch} from "redux-thunk";
 
@@ -17,7 +17,7 @@ const fetchPersons: TFetchPersons = async () => {
 const loadPersonsAction = () => {
   return (dispatch: ThunkDispatch<any, any, any>) =>
     fetchPersons()
-      .then(persons => dispatch(changeInitialPersonAction(persons)))
+      .then(persons => dispatch(writeRawDataAction(persons)))
       .catch(console.log)
 }
 

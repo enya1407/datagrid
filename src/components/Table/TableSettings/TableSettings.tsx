@@ -6,12 +6,17 @@ import ToggleContainer from "./ToggleContainer/ToggleContainer";
 import ExportCSVButton from "./AdditionalButtons/ExportCSVButton";
 import DeleteSelectedButton from "./AdditionalButtons/DeleteSelecteButton";
 import ShowQuerystringButton from "./AdditionalButtons/ShowQuerystringButton";
+import SearchButton from "./SearchButton/SearchButton";
 
 const TableSettings = () => {
 
   return (
     <div className={styles.setting}>
-      <VisibilityColumns/>
+      <div className={styles.container}>
+        <VisibilityColumns/>
+        <SearchButton/>
+        
+      </div>
       <VisibilityRow/>
       <ToggleContainer/>
       <div className={styles.container}>

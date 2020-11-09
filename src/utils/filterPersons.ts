@@ -1,21 +1,22 @@
 import {Gender, PersonType, ShirtSize, VisibilityBoolean} from "../types";
 
-const stringFilter = (filterBy: string, key: keyof PersonType) =>
-  (el: PersonType) => (el[key] as string).toLowerCase().includes(filterBy.toLowerCase())
+const stringFilter = (filterBy: keyof PersonType, searchedValue: string,) =>
+  (el: PersonType) => (el[filterBy] as string).toLowerCase().includes(searchedValue.toLowerCase())
 
-export const filterPersons = (filteredPersons: Array<PersonType>, filterBy: Partial<Record<keyof PersonType, string>>,) => {
+export const filterPersons = (filteredPersons: Array<PersonType>, filterBy: Partial<Record<keyof PersonType, boolean>>, searchedValue: string | undefined) => {
+  if ((!filterBy.first_name && !filterBy.last_name && !filterBy.app_name) || !searchedValue) return filteredPersons;
+  let newArray = [...filteredPersons]
+
   if (filterBy.first_name) {
-    return filteredPersons.filter(stringFilter(filterBy["first_name"], "first_name"));
+    newArray = newArray.filter(stringFilter("first_name", searchedValue));
   }
   if (filterBy.last_name) {
-    return filteredPersons.filter(stringFilter(filterBy["last_name"], "last_name"));
+    newArray = newArray.filter(stringFilter("last_name", searchedValue));
   }
   if (filterBy.app_name) {
-    return filteredPersons.filter(stringFilter(filterBy["app_name"], "app_name"));
-  } else {
-    return filteredPersons
+    newArray = newArray.filter(stringFilter("app_name", searchedValue));
   }
-
+  return newArray
 }
 
 export const filterPersonsByBoolean = (

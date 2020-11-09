@@ -5,7 +5,8 @@ export const commonSelector = (state: StateType) => state
 export const personsSelector = (state: StateType): Array<PersonType> => state.currentDataPersons;
 export const loadingSelector = (state: StateType): boolean => state.isLoading;
 export const sortedBySelector = (state: StateType): Partial<Record<keyof PersonType, "ascent" | "decent">> => state.sortedBy;
-export const filterBySelector = (state: StateType): Partial<Record<keyof PersonType, string>> => state.filterBy;
+export const searchedValueSelector = (state: StateType): string | undefined => state.searchedValue;
+export const filterBySelector = (state: StateType): Partial<Record<keyof PersonType, boolean>> => state.filterBy;
 export const visibilityGenderSelector = (state: StateType): Partial<Record<keyof Gender, boolean>> => state.visibilityGender;
 export const visibilityShirtSizeSelector = (state: StateType): Partial<Record<keyof ShirtSize, boolean>> => state.visibilityShirtSize;
 export const visibilityColumnsSelector = (state: StateType): Record<keyof PersonType, boolean> => state.visibilityColumns;

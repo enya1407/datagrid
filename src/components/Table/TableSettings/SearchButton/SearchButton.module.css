@@ -1,0 +1,16 @@
+.input {
+    margin-right: 10px;
+}
+
+.search {
+    margin-top: 8px;
+}
+
+.button {
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.input__text {
+    width: inherit;
+}

@@ -1,11 +1,11 @@
 import {Gender, PersonType, ShirtSize, StateType, VisibilityBoolean} from "../types";
 
 
-export const loadOldDataAction = (state: StateType) => ({
-  type: "LOAD_DATA_ACTION",
-  payload: {state},
+export const loadOldParamsAction = (params: StateType) => ({
+  type: "LOAD_OLD_PARAMS_ACTION",
+  payload: {params},
 })
-export const changeInitialPersonAction = (persons: Array<PersonType>) => ({
+export const writeRawDataAction = (persons: Array<PersonType>) => ({
   type: "CHANGE_INITIAL_PERSON",
   payload: {persons},
 })
@@ -17,13 +17,18 @@ export const changeLoadingAction = (isLoading: boolean) => ({
   type: "CHANGE_LOADING",
   payload: {isLoading},
 })
-export const changeFilterByAction = (keyName: keyof PersonType, filterBy: string) => ({
-  type: "FILTER_BU",
-  payload: {keyName, filterBy},
+
+export const changeSearchedValueAction = (searchedValue: string) => ({
+  type: "CHANGE_SEARCH_VALUE",
+  payload: {searchedValue},
 })
-export const filterDataAction = (keyName: keyof PersonType, searchButton: boolean) => ({
+export const changeFilterByAction = (filterBy: keyof PersonType) => ({
+  type: "FILTER_BU",
+  payload: {filterBy},
+})
+export const filterDataAction = (search: boolean) => ({
   type: "START_FILTERING",
-  payload: {keyName, searchButton},
+  payload: {search},
 })
 export const changeVisibilityColumnsAction = (keyName: keyof PersonType) => ({
   type: "CHANGE_VISIBILITY_COLUMNS",

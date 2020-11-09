@@ -30,14 +30,14 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   const cellWidth = (data: keyof PersonType) => {
     switch (data) {
       case "id" :
-        return `${styles.td} ${styles.narrow}`
+        return `${styles.cell} ${styles.narrow}`
       case "shirt_size":
       case "gender":
       case"boolean":
 
-        return `${styles.td} ${styles.average}`
+        return `${styles.cell} ${styles.average}`
       default:
-        return `${styles.td} ${styles.wide}`
+        return `${styles.cell} ${styles.wide}`
     }
   }
 
@@ -48,8 +48,8 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
     }
   })
 
-  const styleRow = highlightedRows.includes(person.id) ? styles.tr_active : styles.tr
-  const cellDelRow = highlightedRows.includes(person.id) ? styles.del__row_active : styles.del__row
+  const styleRow = highlightedRows.includes(person.id) ? styles.row_active : styles.row
+  const cellDelRow = highlightedRows.includes(person.id) ? styles.del__row : styles.hidden
   return (
 
     <div className={styleRow} onClick={(event) => onCtrlKeyHandler(event)}>

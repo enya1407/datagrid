@@ -9,7 +9,6 @@ import {Popover} from "antd";
 import BooleanContent from "./FilterContent/BooleanContent";
 import GenderContent from "./FilterContent/GenderContent";
 import ShirtSizeContent from "./FilterContent/ShirtSizeContent";
-import TextContent from "./FilterContent/TextContent";
 
 interface TableHeaderCellProps {
   name: Partial<keyof PersonType>;
@@ -18,7 +17,7 @@ interface TableHeaderCellProps {
 const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const dispatch = useDispatch();
   const isSorted = useSelector(sortedBySelector)
-  const text = useSelector(filterBySelector)[name]
+  const text = useSelector(filterBySelector)
 
   const cellWidth = () => {
     switch (name) {
@@ -38,7 +37,6 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const cellStyle = isSorted[name]
     ? `${styles.th_active} ${styles.th_container}`
     : styles.th_container;
-  const searchStyle = text ? styles.img__search_active : styles.img__search
 
   const content = () => {
     switch (name) {
@@ -48,19 +46,18 @@ const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
         return ShirtSizeContent()
       case 'boolean':
         return BooleanContent()
-      default:
-        return TextContent({name: name})
     }
   }
 
   const filterInPossible =
-    name === "id"
-      ? null
-      : (<Popover content={content}
+    name === "gender" ||
+    name === "shirt_size" ||
+    name === "boolean"
+      ? (<Popover content={content}
                   trigger="click"
                   className={styles.search}>
-        <FilterOutlined className={searchStyle}/>
-      </Popover>)
+        <FilterOutlined className={styles.img__search}/>
+      </Popover>) : <span/>
 
   return (
     <div className={cellWidth()}>

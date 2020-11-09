@@ -33,7 +33,8 @@ export interface StateType {
   initialDataPersons: Array<PersonType>;
   currentDataPersons: Array<PersonType>;
   sortedBy: Partial<Record<keyof PersonType, "ascent" | "decent">>;
-  filterBy: Partial<Record<keyof PersonType, string>>;
+  searchedValue: string | undefined;
+  filterBy: Partial<Record<keyof PersonType, boolean>>;
   visibilityGender: Record<keyof Gender, boolean>;
   visibilityShirtSize: Record<keyof ShirtSize, boolean>;
   visibilityColumns: Record<keyof PersonType, boolean>;
