@@ -10,9 +10,11 @@ import {
   changeVisibilityRowsAction,
   changeVisibilityRowsDataAction,
   changeVisibilityShirtSizeAction,
+  changeVisibleRowVirtualizationAction,
   deleteRowsAction,
   filterDataAction,
   isAsyncAction,
+  isVirtualizeAction,
   loadOldParamsAction,
   sortDataAction,
   writeRawDataAction
@@ -31,6 +33,7 @@ import selectRowsWithShift from "../utils/selectRowsWithShift";
 const initialState: StateType = {
   isLoading: true,
   isAsync: false,
+  isVirtualize: false,
   initialDataPersons: [],
   currentDataPersons: [],
   sortedBy: {},
@@ -49,8 +52,24 @@ const initialState: StateType = {
   },
   visibilityRows: 1000,
   visibilityBoolean: {showTrue: true, showFalse: true},
-  highlightedRows: []
+  highlightedRows: [],
+  visibleRowVirtualization: {
+    numberVisibilityRows: [0, 30],
+    heightEmptyContainers: [0, 0]
+  }
+
+
 }
+
+
+const changeVisibleRowVirtualizationReducer = (state: StateType, action: ReturnType<typeof changeVisibleRowVirtualizationAction>) => ({
+  ...state,
+  visibleRowVirtualization: {
+    numberVisibilityRows: action.payload.numberVisibilityRows,
+    heightEmptyContainers: action.payload.heightEmptyContainers,
+
+  }
+});
 
 const changeLoadingReducer = (state: StateType, action: ReturnType<typeof changeLoadingAction>) => ({
   ...state,
@@ -60,6 +79,11 @@ const changeLoadingReducer = (state: StateType, action: ReturnType<typeof change
 const isAsyncReducer = (state: StateType, action: ReturnType<typeof isAsyncAction>) => ({
   ...state,
   isAsync: !state.isAsync
+});
+
+const isVirtualizeReducer = (state: StateType, action: ReturnType<typeof isVirtualizeAction>) => ({
+  ...state,
+  isVirtualize: !state.isVirtualize
 });
 
 const loadOldParamsReducer = (state: StateType, action: ReturnType<typeof loadOldParamsAction>) => {
@@ -76,6 +100,7 @@ const loadOldParamsReducer = (state: StateType, action: ReturnType<typeof loadOl
     visibilityRows: params.visibilityRows,
     visibilityBoolean: params.visibilityBoolean,
     isAsync: params.isAsync,
+    isVirtualize: params.isVirtualize,
     highlightedRows: params.highlightedRows,
   })
 }
@@ -106,7 +131,7 @@ const changeHighlightedRowsReducer = (state: StateType, action: ReturnType<typeo
       case "ctrl":
         return [...state.highlightedRows, id];
       case "shift":
-        return selectRowsWithShift(state.initialDataPersons, state.highlightedRows, id);
+        return selectRowsWithShift(state.currentDataPersons, state.highlightedRows, id);
       default:
         return [...[], id];
     }
@@ -283,6 +308,7 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
 };
 
 export const rootReducer = createRootReducer(initialState)([
+  [changeVisibleRowVirtualizationReducer, changeVisibleRowVirtualizationAction],
   [loadOldParamsReducer, loadOldParamsAction],
   [writeRawDataReducer, writeRawDataAction],
   [sortDataReducer, sortDataAction],
@@ -295,6 +321,7 @@ export const rootReducer = createRootReducer(initialState)([
   [changeVisibilityRowsReducer, changeVisibilityRowsAction],
   [changeVisibilityBooleansReducer, changeVisibilityBooleansAction],
   [isAsyncReducer, isAsyncAction],
+  [isVirtualizeReducer, isVirtualizeAction],
   [changeVisibilityGenderReducer, changeVisibilityGenderAction],
   [changeVisibilityShirtSizeReducer, changeVisibilityShirtSizeAction],
   [changeHighlightedRowsReducer, changeHighlightedRowsAction],

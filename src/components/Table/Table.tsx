@@ -7,10 +7,12 @@ import {PersonType} from "../../types";
 import {commonSelector} from "../../selector/selector";
 import {Spin} from "antd";
 import TableSettings from "./TableSettings/TableSettings";
+import Virtualization from "../../utils/Virtualization";
 
 const Table = () => {
-  const {isLoading, currentDataPersons} = useSelector(commonSelector);
-  
+  const {isLoading, currentDataPersons, isVirtualize, visibilityRows} = useSelector(commonSelector);
+
+
   const rows = currentDataPersons.map((person: PersonType) => {
     return <TableRow key={person.id} person={person}/>
   })
@@ -25,7 +27,7 @@ const Table = () => {
     <div className={styles.table}>
       <TableSettings/>
       <TableHeader/>
-      {rows}
+      <div style={{backgroundColor: "white"}}> {isVirtualize ? <Virtualization/> : rows}</div>
     </div>
   )
 }

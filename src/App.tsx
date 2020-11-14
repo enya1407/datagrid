@@ -19,6 +19,7 @@ const App = () => {
     visibilityRows,
     visibilityBoolean,
     isAsync,
+    isVirtualize,
     highlightedRows
   } = useSelector(commonSelector)
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const App = () => {
   useEffect(() => {
     const params = {
       isAsync,
+      isVirtualize,
       sortedBy,
       searchedValue,
       filterBy,
@@ -54,6 +56,7 @@ const App = () => {
     window.localStorage.setItem("params", JSON.stringify(params))
   }, [
     isAsync,
+    isVirtualize,
     sortedBy,
     searchedValue,
     filterBy,

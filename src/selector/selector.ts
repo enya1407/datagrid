@@ -1,4 +1,4 @@
-import {Gender, PersonType, ShirtSize, StateType, VisibilityBoolean} from "../types";
+import {Gender, PersonType, ShirtSize, StateType, VisibilityBoolean, VisibleRowVirtualization} from "../types";
 
 export const commonSelector = (state: StateType) => state
 
@@ -13,7 +13,9 @@ export const visibilityColumnsSelector = (state: StateType): Record<keyof Person
 export const visibilityRowsSelector = (state: StateType): number => state.visibilityRows;
 export const visibilityBooleanSelector = (state: StateType): VisibilityBoolean => state.visibilityBoolean;
 export const isAsyncSelector = (state: StateType): boolean => state.isAsync;
+export const isVirtualizeSelector = (state: StateType): boolean => state.isVirtualize;
 export const highlightedRowsSelector = (state: StateType): Array<number> => state.highlightedRows;
+export const visibleRowVirtualizationSelector = (state: StateType): VisibleRowVirtualization => state.visibleRowVirtualization;
 
 
 

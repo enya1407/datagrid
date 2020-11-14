@@ -53,9 +53,10 @@ const TableRow: React.FC<TableRowProps> = ({person}) => {
   return (
 
     <div className={styleRow} onClick={(event) => onCtrlKeyHandler(event)}>
-      {tableData}
+
       <div className={cellDelRow}><Button className={styles.delRowButton}
                                           onClick={() => dispatch(deleteRowsAction(person.id))}>del</Button></div>
+      {tableData}
     </div>
   )
 }

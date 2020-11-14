@@ -2,7 +2,7 @@ import {sortDataAction} from "../../../../actions";
 import React from "react";
 import styles from "./TableHeaderCell.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {filterBySelector, sortedBySelector} from "../../../../selector/selector";
+import {sortedBySelector} from "../../../../selector/selector";
 import {PersonType} from "../../../../types";
 import {CaretDownOutlined, CaretUpOutlined, FilterOutlined} from "@ant-design/icons";
 import {Popover} from "antd";
@@ -17,7 +17,6 @@ interface TableHeaderCellProps {
 const TableHeaderCell: React.FC<TableHeaderCellProps> = ({name}) => {
   const dispatch = useDispatch();
   const isSorted = useSelector(sortedBySelector)
-  const text = useSelector(filterBySelector)
 
   const cellWidth = () => {
     switch (name) {

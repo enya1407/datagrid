@@ -48,6 +48,10 @@ export const changeVisibilityBooleansAction = (keyName: keyof VisibilityBoolean)
 export const isAsyncAction = () => ({
   type: "IS_ASYNC",
 })
+export const isVirtualizeAction = () => ({
+  type: "IS_VIRTUALIZE",
+})
+
 export const changeVisibilityGenderAction = (keyName: keyof Gender) => ({
   type: "CHANGE_VISIBILITY_GENDER",
   payload: {keyName},
@@ -64,6 +68,11 @@ export const deleteRowsAction = (selected: number) => ({
   type: "DELETE_ROWS",
   payload: {selected},
 })
+export const changeVisibleRowVirtualizationAction = (numberVisibilityRows: Array<number>, heightEmptyContainers: Array<number>) => ({
+  type: "CHANGE_VISIBLE_ROWS_VIRTUALIZATION",
+  payload: {numberVisibilityRows, heightEmptyContainers},
+})
+
 
 
 

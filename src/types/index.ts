@@ -28,6 +28,12 @@ export interface VisibilityBoolean {
   showFalse: boolean;
 }
 
+export interface VisibleRowVirtualization {
+  numberVisibilityRows: Array<number>;
+  heightEmptyContainers: Array<number>;
+}
+
+
 export interface StateType {
   isLoading: boolean;
   initialDataPersons: Array<PersonType>;
@@ -41,6 +47,8 @@ export interface StateType {
   visibilityRows: number;
   visibilityBoolean: VisibilityBoolean;
   isAsync: boolean;
+  isVirtualize: boolean;
   highlightedRows: Array<number>;
+  visibleRowVirtualization: VisibleRowVirtualization;
 }
 
