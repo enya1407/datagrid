@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import Table from "./components/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {commonSelector} from "./selector/selector";
-import {changeLoadingAction, loadOldParamsAction, writeRawDataAction} from "./actions";
+import {changeLoadingAction, loadDataQueryStringParamsAction, loadOldParamsAction, writeRawDataAction} from "./actions";
 import data from "./data";
 import loadPersonsAction from "./actions/thunkLoadData";
 
@@ -27,10 +27,13 @@ const App = () => {
   useEffect(() => {
     dispatch(changeLoadingAction(true))
     const dataLocalStorage = window.localStorage.getItem('params');
+    const dataQueryString = window.location.search
 
     dataLocalStorage != null
       ? dispatch(loadOldParamsAction(JSON.parse(dataLocalStorage)))
       : dispatch(writeRawDataAction(data))
+
+    if (dataQueryString) dispatch(loadDataQueryStringParamsAction(dataQueryString))
   }, [])
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import {
   filterDataAction,
   isAsyncAction,
   isVirtualizeAction,
+  loadDataQueryStringParamsAction,
   loadOldParamsAction,
   sortDataAction,
   writeRawDataAction
@@ -37,7 +38,7 @@ const initialState: StateType = {
   initialDataPersons: [],
   currentDataPersons: [],
   sortedBy: {},
-  searchedValue: undefined,
+  searchedValue: "",
   filterBy: {"first_name": true, "last_name": true, "app_name": true,},
   visibilityGender: {Male: true, Female: true},
   visibilityShirtSize: {"3XL": true, "2XL": true, "XL": true, "L": true, "M": true, "S": true, "XS": true},
@@ -57,10 +58,7 @@ const initialState: StateType = {
     numberVisibilityRows: [0, 30],
     heightEmptyContainers: [0, 0]
   }
-
-
 }
-
 
 const changeVisibleRowVirtualizationReducer = (state: StateType, action: ReturnType<typeof changeVisibleRowVirtualizationAction>) => ({
   ...state,
@@ -85,6 +83,34 @@ const isVirtualizeReducer = (state: StateType, action: ReturnType<typeof isVirtu
   ...state,
   isVirtualize: !state.isVirtualize
 });
+
+
+const loadDataQueryStringParamsReducer = (state: StateType, action: ReturnType<typeof loadDataQueryStringParamsAction>) => {
+  const [gender, ShirtSize, boolean, searchedValue] =
+    action.payload.params.slice(1).split("&").map(el => el.split("=")[1])
+
+  return ({
+    ...state,
+    visibilityGender: {
+      Male: gender.includes("Male"),
+      Female: gender.includes("Female")
+    },
+    visibilityShirtSize: {
+      "3XL": ShirtSize.includes("3XL"),
+      "2XL": ShirtSize.includes("2XL"),
+      "XL": ShirtSize.includes("XL"),
+      "L": ShirtSize.includes("L"),
+      "M": ShirtSize.includes("M"),
+      "S": ShirtSize.includes("S"),
+      "XS": ShirtSize.includes("XS")
+    },
+    visibilityBoolean: {
+      showTrue: boolean.includes("showTrue"),
+      showFalse: boolean.includes("showFalse")
+    },
+    searchedValue: searchedValue,
+  })
+}
 
 const loadOldParamsReducer = (state: StateType, action: ReturnType<typeof loadOldParamsAction>) => {
   const params = action.payload.params
@@ -308,6 +334,7 @@ const sortDataReducer = (state: StateType, action: ReturnType<typeof sortDataAct
 };
 
 export const rootReducer = createRootReducer(initialState)([
+  [loadDataQueryStringParamsReducer, loadDataQueryStringParamsAction],
   [changeVisibleRowVirtualizationReducer, changeVisibleRowVirtualizationAction],
   [loadOldParamsReducer, loadOldParamsAction],
   [writeRawDataReducer, writeRawDataAction],

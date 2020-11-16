@@ -1,6 +1,10 @@
 import {Gender, PersonType, ShirtSize, StateType, VisibilityBoolean} from "../types";
 
 
+export const loadDataQueryStringParamsAction = (params: string) => ({
+  type: "LOAD_DATA_QUERY_STRING_ACTION",
+  payload: {params},
+})
 export const loadOldParamsAction = (params: StateType) => ({
   type: "LOAD_OLD_PARAMS_ACTION",
   payload: {params},

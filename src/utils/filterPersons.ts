@@ -49,6 +49,7 @@ export const filterPersonsByGender = (dataPersons: Array<PersonType>, visibility
 export const filterPersonsByShirtSize = (dataPersons: Array<PersonType>, visibilityShirtSize: Record<keyof ShirtSize, boolean>) => {
   const visibilityValue = Object.entries(visibilityShirtSize).filter(el => el[1] === true).map(el => el[0])
   if (
+    !visibilityShirtSize["3XL"] &&
     !visibilityShirtSize["2XL"] &&
     !visibilityShirtSize.XL &&
     !visibilityShirtSize.L &&
@@ -57,6 +58,7 @@ export const filterPersonsByShirtSize = (dataPersons: Array<PersonType>, visibil
     !visibilityShirtSize.XS) {
     return []
   } else if (
+    visibilityShirtSize["3XL"] &&
     visibilityShirtSize["2XL"] &&
     visibilityShirtSize.XL &&
     visibilityShirtSize.L &&

@@ -39,11 +39,9 @@ const Virtualization = () => {
     //   heightEmptyContainers,
     //   ),
     // );
-    console.log(indexOfFirstElement, numberVisibilityRows)
     currentYOffset = yOffset
 
   }
-  console.log(numberVisibilityRows)
 
   // console.log(virtualization[1][0], virtualization[1][1])
   useEffect(() => {

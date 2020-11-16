@@ -10,7 +10,7 @@ const ShirtSizeContent = () => {
 
   const shirtSizeCheckbox = useSelector(visibilityShirtSizeSelector)
   const dispatch = useDispatch();
-  const arrShirtSize: Array<keyof ShirtSize> = ["2XL", "XL", "L", "M", "S", "XS"]
+  const arrShirtSize: Array<keyof ShirtSize> = ["3XL", "2XL", "XL", "L", "M", "S", "XS"]
   const contentByShirtSize = arrShirtSize.map((data: Partial<keyof ShirtSize>, i: number) => (
     <div key={i}>
       <input type="checkbox"
