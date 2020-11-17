@@ -1,63 +1,60 @@
-
 .row {
-    background-color: white;
+  background-color: white;
 }
 
 .row,
 .row_active {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
 }
 
-.row_active, .row_active .narrow {
-    background-color: #0288d1
+.row_active,
+.row_active .narrow {
+  background-color: #0288d1;
 }
 
 .row_active:hover {
-    cursor: pointer;
-
+  cursor: pointer;
 }
 
-.row:hover, .row:hover .narrow {
-    cursor: pointer;
-    background-color: #e1f5fe
-
+.row:hover,
+.row:hover .narrow {
+  cursor: pointer;
+  background-color: #e1f5fe;
 }
 
 .cell {
-    border: 1px solid #455A64;
-    padding: 5px 0;
-    width: 10px;
-    overflow: hidden;
-
+  border: 1px solid #455a64;
+  padding: 5px 0;
+  width: 10px;
+  overflow: hidden;
 }
 
 .narrow {
-    flex-grow: 1;
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background-color: white;
+  flex-grow: 1;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: white;
 }
 
 .wide {
-    flex-grow: 4;
+  flex-grow: 4;
 }
 
 .average {
-    flex-grow: 2;
+  flex-grow: 2;
 }
 
-
 .hidden {
-    display: none;
+  display: none;
 }
 
 .del__row {
-    border: 1px #00000000 solid;
-    padding: 0px;
-    width: 40px;
-    background-color: white;
-    position: absolute;
-    right: -40px;
+  border: 1px #00000000 solid;
+  padding: 0px;
+  width: 40px;
+  background-color: white;
+  position: absolute;
+  right: -40px;
 }

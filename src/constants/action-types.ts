@@ -1,7 +1,0 @@
-export const CHANGE_NAME = "CHANGE_NAME";
-export const CHANGE_SECOND_NAME = "CHANGE_SECOND_NAME";
-export const INITIAL_STATE = "INITIAL_STATE";
-export const CHANGE_LOADING = "CHANGE_LOADING";
-export const CHANGE_PERSON = "CHANGE_PERSON";
-
-

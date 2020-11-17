@@ -1,11 +1,9 @@
 .tr {
-    position: sticky;
-    top: 160px;
-    z-index: 4;
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    background-color: #b3e5fc;
-
-
+  position: sticky;
+  top: 160px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  background-color: #b3e5fc;
 }

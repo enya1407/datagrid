@@ -1,9 +1,8 @@
 .visibilityBoolean {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
-
